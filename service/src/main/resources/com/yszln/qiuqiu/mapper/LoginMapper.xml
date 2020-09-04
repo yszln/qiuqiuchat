@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yszln.qiuqiu.mapper.LoginMapper">
+    <select id="findById" resultType="com.yszln.qiuqiu.entity.Login" parameterType="long">
+        SELECT * FROM  tb_login WHERE memberId=#{memberId}
+    </select>
+    <select id="findByToken" resultType="com.yszln.qiuqiu.entity.Login" parameterType="String">
+        SELECT * FROM  tb_login WHERE token=#{token}
+    </select>
+    <insert id="insert" parameterType="com.yszln.qiuqiu.entity.Login">
+       insert into tb_login (memberId,token) values (#{memberId},#{token})
+    </insert>
+</mapper>

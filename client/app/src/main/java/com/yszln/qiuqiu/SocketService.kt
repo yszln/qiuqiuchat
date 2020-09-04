@@ -20,7 +20,7 @@ class SocketService : Service() {
     private var mSocket: WebSocket
 
     init {
-        val socketRequest = Request.Builder().url("ws://192.168.123.129:8080/websocket/1").build()
+        val socketRequest = Request.Builder().url("ws://huwei.iask.in/websocket/1").build()
         val okHttpClient = OkHttpClient.Builder()
             .readTimeout(3, TimeUnit.SECONDS)//设置读取超时时间
             .writeTimeout(3, TimeUnit.SECONDS)//设置写的超时时间
@@ -56,10 +56,12 @@ class SocketService : Service() {
 
         override fun onMessage(webSocket: WebSocket, bytes: ByteString) {
             super.onMessage(webSocket, bytes)
+            Log.e("Socket", "onMessage:${bytes}")
         }
 
         override fun onMessage(webSocket: WebSocket, text: String) {
             super.onMessage(webSocket, text)
+            Log.e("Socket", "onMessage:${text}")
         }
     }
 

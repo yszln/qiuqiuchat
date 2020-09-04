@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yszln.qiuqiu.mapper.MemberMapper">
+    <select id="findAll" resultType="com.yszln.qiuqiu.entity.Member">
+        SELECT * FROM  tb_member
+    </select>
+    <select id="findMemberByUserName" resultType="com.yszln.qiuqiu.entity.Member"
+            parameterType="String">
+        select * from tb_member where username=#{username}
+    </select>
+    <select id="login" resultType="com.yszln.qiuqiu.entity.Member"
+            parameterType="Map">
+        select * from tb_member where username=#{username} and password=#{password}
+    </select>
+    <insert id="register" parameterType="Map">
+        insert into tb_member (username,password) values (#{username},#{password})
+    </insert>
+</mapper>

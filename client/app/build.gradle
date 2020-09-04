@@ -7,7 +7,7 @@ android {
     buildToolsVersion "30.0.1"
 
     defaultConfig {
-        applicationId "com.yszln.qiuqiu "
+        applicationId "com.yszln.qiuqiu"
         minSdkVersion 16
         targetSdkVersion 30
         versionCode 1
@@ -36,5 +36,7 @@ dependencies {
 
     //OkHttp3
     implementation "com.squareup.okhttp3:okhttp:4.8.1"
+
+    implementation 'com.gitee.yszln:wanAndroid:0.1'
 
 }
