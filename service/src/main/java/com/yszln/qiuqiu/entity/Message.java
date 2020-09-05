@@ -1,10 +1,14 @@
 package com.yszln.qiuqiu.entity;
 
+import lombok.Data;
+
+@Data
 public class Message {
     private long id;
     private String content;
     private String url;
     private int type;
+    private long sourceId;
 
     public long getId() {
         return id;

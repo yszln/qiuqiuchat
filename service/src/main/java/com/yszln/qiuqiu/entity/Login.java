@@ -1,5 +1,8 @@
 package com.yszln.qiuqiu.entity;
 
+import lombok.Data;
+
+@Data
 public class Login {
     private long memberId;
     private String token;

@@ -68,45 +68,14 @@ public class WebSocket {
     @OnMessage
     public void OnMessage(String message) {
 
-        System.out.println("[WebSocket] 收到消息：" + message + ",session:" + session.getId() + ",address:" + this);
+        System.out.println("[WebSocket] 收到消息：" + message + ",session:" + session.getId() );
         //判断是否需要指定发送，具体规则自定义
-        if (message.indexOf("TOUSER") == 0) {
-            String name = message.substring(message.indexOf("TOUSER") + 6, message.indexOf(";"));
-            AppointSending(name, message.substring(message.indexOf(";") + 1, message.length()));
-        } else {
-            GroupSending(message);
-        }
 
     }
 
-    /**
-     * 群发
-     *
-     * @param message
-     */
-    public void GroupSending(String message) {
-        for (WebSocket socket : webSocketSet.values()) {
-            try {
-                socket.session.getBasicRemote().sendText(message);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 
-    /**
-     * 指定发送
-     *
-     * @param name
-     * @param message
-     */
-    public void AppointSending(String name, String message) {
-        try {
-            webSocketSet.get(name).session.getBasicRemote().sendText(message);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+
+
 
     @Autowired
     public void setLoginService(LoginService loginService) {

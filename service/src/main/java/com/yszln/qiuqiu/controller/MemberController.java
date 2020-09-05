@@ -22,7 +22,7 @@ public class MemberController {
 
     @RequestMapping("/findAll")
     public BaseBean findAll() {
-        return new BaseBean<>(0, "success", memberService.findAll());
+        return new BaseBean<>(200, "success", memberService.findAll());
     }
 
     @PostMapping("/register")
@@ -32,9 +32,9 @@ public class MemberController {
         int register = memberService.register(username, password);
         if (register > 0) {
             //登陆成功
-
+            return memberService.login(username, password);
         }
-        return new BaseBean<>(0, "success", register);
+        return new BaseBean<>(500, "注册失败", null);
     }
 
     @PostMapping("/login")

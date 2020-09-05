@@ -1,7 +1,9 @@
 package com.yszln.qiuqiu.controller;
 
 import com.yszln.qiuqiu.entity.BaseBean;
+import com.yszln.qiuqiu.service.FileService;
 import com.yszln.qiuqiu.utils.Utils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,33 +20,16 @@ import java.util.List;
 @RequestMapping("/file")
 public class FileController {
 
-    //nginx的路径
-    public static final String PATH = "E:\\soft\\nginx-1.15.11\\html\\";
-    public static final String UPLOAD_PATH = "upload\\";
+    @Autowired
+    private FileService fileService;
 
     @ResponseBody
     @PostMapping("/upload")
     public BaseBean uploadFile(@RequestParam("files") MultipartFile files[], HttpServletRequest request) {
-        List<String> paths = new ArrayList<>();
-        BufferedOutputStream stream;
-        if (files != null) {
-            for (MultipartFile file : files) {
-                try {
-                    byte[] bytes = file.getBytes();
-                    String fileName = System.currentTimeMillis() + file.hashCode() + Utils.getFileSuffix(file.getOriginalFilename());
-                    stream = new BufferedOutputStream(new FileOutputStream(
-                            new File(PATH +UPLOAD_PATH+ fileName)
-                    ));
-                    stream.write(bytes);
-                    stream.close();
-                    paths.add(UPLOAD_PATH+fileName);
-
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    return new BaseBean(-1, "上传失败："+e.getMessage(),null);
-                }
-            }
+        List<String> paths = fileService.uploadFile(files);
+        if(null==paths){
+            return new BaseBean(500, "上传失败", null);
         }
-        return new BaseBean(0, "上传成功", paths);
+        return new BaseBean(200, "上传成功", paths);
     }
 }

@@ -43,11 +43,11 @@ public class MemberServiceImpl implements MemberService {
             loginUser.setPassword(null);
             int insert = loginMapper.insert(new Login(loginUser.getId(), token));
             if (insert > 0) {
-                return new BaseBean<>(0, "success", loginSuccessBean);
+                return new BaseBean<>(200, "success", loginSuccessBean);
             }
-            return new BaseBean<>(-1, "登陆异常", null);
+            return new BaseBean<>(500, "登陆异常", null);
         }
-        return new BaseBean<>(-1, "账号或者密码错误", null);
+        return new BaseBean<>(500, "账号或者密码错误", null);
 
     }
 }
