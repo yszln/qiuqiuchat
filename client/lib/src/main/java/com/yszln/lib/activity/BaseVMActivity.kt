@@ -30,8 +30,8 @@ abstract class BaseVMActivity<VM : RefreshViewModel> : BaseActivity(),
         loadingDialog = LoadingDialog(this)
         initRefresh()
         observe()
-        initClick()
-       onRefresh()
+        onClick()
+        onRefresh()
     }
 
     /**
@@ -89,7 +89,7 @@ abstract class BaseVMActivity<VM : RefreshViewModel> : BaseActivity(),
     /**
      * 点击事件
      */
-    fun initClick() {}
+    open fun onClick() {}
 
     /**
      * 设置观察者

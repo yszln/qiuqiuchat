@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <color name="textColor">#323232</color>
 
 
@@ -7,6 +7,12 @@
     <color name="gray_ef">#EFEFEF</color>
     <color name="gray_ed">#EDEDED</color>
     <color name="gray_6b">#6B6B6B</color>
+    <color name="gray_da">#DADADA</color>
+    <color name="gray_a5">#A5A5A5</color>
+    <color name="gray_d7" >#D7D7D7</color>
+    <color name="gray_e1">#E1E1E1</color>
+    <color name="gray_bf">#BFBFBF</color>
+
 
     <color name="white">#FFFFFF</color><!--白色 -->
     <color name="yellow">#FFFF00</color><!--黄色 -->

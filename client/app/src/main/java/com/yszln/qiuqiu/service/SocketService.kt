@@ -1,16 +1,17 @@
-package com.yszln.qiuqiu
+package com.yszln.qiuqiu.service
 
 import android.app.Service
 import android.content.Intent
 import android.os.*
 import android.util.Log
+import com.yszln.lib.network.ApiFactory
+import com.yszln.qiuqiu.api.Api
+import com.yszln.qiuqiu.db.UserUtils
 import okhttp3.*
 import okio.ByteString
-import java.util.concurrent.TimeUnit
 
 class SocketService : Service() {
 
-    private val sendTime = 0L
 
     // 发送心跳包
     private val mHandler: Handler = MyHandler()
@@ -20,13 +21,12 @@ class SocketService : Service() {
     private var mSocket: WebSocket
 
     init {
-        val socketRequest = Request.Builder().url("ws://huwei.iask.in/websocket/1").build()
-        val okHttpClient = OkHttpClient.Builder()
-            .readTimeout(3, TimeUnit.SECONDS)//设置读取超时时间
-            .writeTimeout(3, TimeUnit.SECONDS)//设置写的超时时间
-            .connectTimeout(3, TimeUnit.SECONDS)//设置连接超时时间
-            .build();
-        mSocket = okHttpClient.newWebSocket(socketRequest, MyListener())
+        val socketRequest = Request
+            .Builder()
+            .url(Api.SOCKET_API + UserUtils.getToken())
+            .build()
+
+        mSocket = ApiFactory.mOkHttpClient.newWebSocket(socketRequest, MyListener())
         mSocket.request()
 
         //启动心跳检测
@@ -73,11 +73,12 @@ class SocketService : Service() {
         }
     }
 
-    inner class MyBinder: Binder() {
-        fun send(message:String){
+    inner class MyBinder : Binder() {
+        fun send(message: String) {
             mSocket.send(message)
         }
-        fun send(bytes: ByteString){
+
+        fun send(bytes: ByteString) {
             mSocket.send(bytes)
         }
     }

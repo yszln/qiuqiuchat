@@ -4,6 +4,7 @@ import android.app.Application
 import android.content.Context
 import com.chad.library.adapter.base.module.LoadMoreModuleConfig
 import com.yszln.lib.widget.CustomLoadMoreView
+import kotlin.properties.Delegates
 
 
 open class BaseApplication : Application() {
@@ -11,7 +12,7 @@ open class BaseApplication : Application() {
 
     companion object {
         var isDebug = BuildConfig.DEBUG
-        lateinit var mContext: Context
+        var mContext: BaseApplication by Delegates.notNull()
     }
 
     override fun onCreate() {

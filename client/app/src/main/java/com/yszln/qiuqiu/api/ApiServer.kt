@@ -1,5 +1,7 @@
 package com.yszln.qiuqiu.api
 
+import com.yszln.lib.bean.BaseBean
+import com.yszln.qiuqiu.ui.login.model.LoginBean
 import retrofit2.http.*
 
 /**
@@ -8,5 +10,24 @@ import retrofit2.http.*
 @JvmSuppressWildcards
 interface ApiServer {
 
+    /**
+     * 登录
+     */
+    @POST("/member/login")
+    @FormUrlEncoded
+    suspend fun login(
+        @Field("username") username: String,
+        @Field("password") password: String
+    ):BaseBean<LoginBean>
+
+    /**
+     * 注册
+     */
+    @POST("/member/register")
+    @FormUrlEncoded
+    suspend fun register(
+        @Field("username") username: String,
+        @Field("password") password: String
+    ):BaseBean<LoginBean>
 
 }

@@ -1,12 +1,18 @@
 package com.yszln.qiuqiu
 
-import android.app.Application
-import android.content.Intent
+import com.yszln.lib.BaseApplication
+import kotlin.properties.Delegates
 
-class MyApp : Application(){
+class MyApp : BaseApplication(){
+
+    companion object{
+        var instance: MyApp by Delegates.notNull()
+
+    }
+
     override fun onCreate() {
         super.onCreate()
-        val intent = Intent(this, SocketService::class.java)
-        startService(intent)
+        instance=this
+
     }
 }
