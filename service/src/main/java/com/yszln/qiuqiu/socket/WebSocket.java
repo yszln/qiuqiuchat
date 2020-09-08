@@ -49,7 +49,7 @@ public class WebSocket {
             System.out.println("[WebSocket] 连接成功，当前连接人数为：" + webSocketSet.size());
         } else {
             try {
-                session.getBasicRemote().sendText(JSON.toJSONString(new BaseBean(-1, "请登录", null)));
+                session.getBasicRemote().sendText(JSON.toJSONString(new BaseBean(500, "请登录", null)));
                 session.close();
             } catch (IOException e) {
                 e.printStackTrace();
