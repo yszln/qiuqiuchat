@@ -4,6 +4,8 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
+import com.xuexiang.xui.widget.picker.widget.OptionsPickerView
+import com.xuexiang.xui.widget.picker.widget.builder.OptionsPickerBuilder
 import com.yszln.lib.activity.BaseVMActivity
 import com.yszln.lib.utils.start
 import com.yszln.lib.utils.textStr
@@ -62,7 +64,7 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
     }
 
     private fun forgetPasswordLayout() {
-
+        OptionsPickerBuilder(this,null).
     }
 
     /**
