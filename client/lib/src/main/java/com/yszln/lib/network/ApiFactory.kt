@@ -2,7 +2,7 @@ package com.yszln.lib.network
 
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
-import com.yszln.lib.BaseApplication
+import com.yszln.lib.app.BaseApplication
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
@@ -28,16 +28,19 @@ object ApiFactory {
     private fun newClient(): OkHttpClient {
         return OkHttpClient.Builder().apply {
             //连接超时时间
-            connectTimeout(30, TimeUnit.SECONDS)
+            connectTimeout(5, TimeUnit.SECONDS)
             //读取超时时间
             readTimeout(10, TimeUnit.SECONDS)
             //写入超时时间
             writeTimeout(60, TimeUnit.SECONDS)
+                .pingInterval(1, TimeUnit.SECONDS)
             //debug模式添加日志拦截器
             if (BaseApplication.isDebug) {
                 addInterceptor(mLoggingInterceptor)
             }
-            cookieJar(mLoginCookie)
+            addInterceptor(HeadInterceptor())
+
+//            cookieJar(mLoginCookie)
         }.build();
     }
 

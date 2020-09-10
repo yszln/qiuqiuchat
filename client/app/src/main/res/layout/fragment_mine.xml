@@ -13,4 +13,9 @@
         android:text="TextView"
         tools:layout_editor_absoluteX="111dp"
         tools:layout_editor_absoluteY="49dp" />
+
+    <TextView
+        android:id="@+id/mineLoginName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
 </LinearLayout>

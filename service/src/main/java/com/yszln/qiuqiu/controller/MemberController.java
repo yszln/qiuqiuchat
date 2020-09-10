@@ -1,16 +1,11 @@
 package com.yszln.qiuqiu.controller;
 
-import com.yszln.qiuqiu.entity.BaseBean;
-import com.yszln.qiuqiu.entity.Login;
-import com.yszln.qiuqiu.entity.LoginSuccessBean;
-import com.yszln.qiuqiu.entity.Member;
-import com.yszln.qiuqiu.service.LoginService;
+import com.yszln.qiuqiu.bean.BaseBean;
+import com.yszln.qiuqiu.bean.ErrorBean;
+import com.yszln.qiuqiu.bean.SuccessBean;
 import com.yszln.qiuqiu.service.MemberService;
-import com.yszln.qiuqiu.utils.MD5Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/member")
@@ -22,7 +17,7 @@ public class MemberController {
 
     @RequestMapping("/findAll")
     public BaseBean findAll() {
-        return new BaseBean<>(200, "success", memberService.findAll());
+        return new SuccessBean<>( "success", memberService.findAll());
     }
 
     @PostMapping("/register")
@@ -33,8 +28,10 @@ public class MemberController {
         if (register > 0) {
             //登陆成功
             return memberService.login(username, password);
+        }else if(register==-1){
+            return new ErrorBean<>( "该用户名已存在", null);
         }
-        return new BaseBean<>(500, "注册失败", null);
+        return new ErrorBean<>( "注册失败", null);
     }
 
     @PostMapping("/login")

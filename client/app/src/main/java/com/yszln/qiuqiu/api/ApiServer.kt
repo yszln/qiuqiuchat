@@ -1,6 +1,7 @@
 package com.yszln.qiuqiu.api
 
 import com.yszln.lib.bean.BaseBean
+import com.yszln.qiuqiu.db.table.TbUser
 import com.yszln.qiuqiu.ui.login.model.LoginBean
 import retrofit2.http.*
 
@@ -18,7 +19,7 @@ interface ApiServer {
     suspend fun login(
         @Field("username") username: String,
         @Field("password") password: String
-    ):BaseBean<LoginBean>
+    ): BaseBean<LoginBean>
 
     /**
      * 注册
@@ -28,6 +29,9 @@ interface ApiServer {
     suspend fun register(
         @Field("username") username: String,
         @Field("password") password: String
-    ):BaseBean<LoginBean>
+    ): BaseBean<LoginBean>
+
+    @POST("/friend/findAll")
+    suspend fun getFriends(): BaseBean<MutableList<TbUser>>
 
 }

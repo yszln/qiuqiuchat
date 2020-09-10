@@ -6,6 +6,7 @@ import com.yszln.lib.activity.BaseActivity
 import com.yszln.lib.utils.start
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.UserUtils
+import com.yszln.qiuqiu.ui.login.view.LoginActivity
 import com.yszln.qiuqiu.ui.main.view.MainActivity
 
 class SplashActivity : BaseActivity() {
@@ -16,7 +17,10 @@ class SplashActivity : BaseActivity() {
         Handler(Looper.getMainLooper()).postDelayed({
             if (UserUtils.checkLogin()) {
                 start(MainActivity::class.java)
+            }else{
+                start(LoginActivity::class.java)
             }
+            finish()
         },2000)
 
     }

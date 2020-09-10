@@ -1,5 +1,6 @@
 package com.yszln.qiuqiu.mapper;
 
+import com.yszln.qiuqiu.entity.Login;
 import com.yszln.qiuqiu.entity.Member;
 import org.apache.ibatis.annotations.Param;
 
@@ -15,4 +16,8 @@ public interface MemberMapper {
 
     int register(@Param("username") String username,
                        @Param("password") String password);
+
+    int findMemberCount(String usesrname);
+
+    Member findMemberByToken(String token);
 }

@@ -1,10 +1,6 @@
 package com.yszln.qiuqiu.ui.main.view
 
-import android.content.ComponentName
-import android.content.Context
 import android.content.Intent
-import android.content.ServiceConnection
-import android.os.IBinder
 import androidx.viewpager.widget.ViewPager
 import com.yszln.lib.activity.BaseActivity
 import com.yszln.lib.adapter.BaseFragmentAdapter
@@ -17,8 +13,9 @@ import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity() {
-    lateinit var mSocketBind: SocketService.MyBinder
-    val conn = MyConn()
+
+
+
     var mPagerAdapter = BaseFragmentAdapter<BaseFragment>(supportFragmentManager)
 
 
@@ -28,6 +25,7 @@ class MainActivity : BaseActivity() {
     init {
         navs.apply {
             add(NavBean(R.id.main_home, HomeFragment()))
+            add(NavBean(R.id.main_linkman, LinkmanFragment()))
             add(NavBean(R.id.main_mine, MineFragment()))
         }
     }
@@ -36,7 +34,7 @@ class MainActivity : BaseActivity() {
         MyStatusBar(this)
         val intent = Intent(this, SocketService::class.java)
         startService(intent)
-        bindService(intent, conn, Context.BIND_AUTO_CREATE)
+
 
         mainNav.setOnNavigationItemSelectedListener {
             for (i in 0 until navs.size) {
@@ -64,26 +62,13 @@ class MainActivity : BaseActivity() {
 
             }
         })
-        mPagerAdapter.addFragment(HomeFragment())
-        mPagerAdapter.addFragment(MineFragment())
+        for (nav in navs) {
+            mPagerAdapter.addFragment(nav.fragment)
+        }
         mainViewPager.adapter = mPagerAdapter
     }
 
-    override fun onDestroy() {
-        unbindService(conn)
-        super.onDestroy()
-    }
 
-    inner class MyConn : ServiceConnection {
-        override fun onServiceDisconnected(p0: ComponentName?) {
-
-        }
-
-        override fun onServiceConnected(p0: ComponentName?, p1: IBinder?) {
-            mSocketBind = (p1 as SocketService.MyBinder)
-        }
-
-    }
 
 }
 

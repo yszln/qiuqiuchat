@@ -9,6 +9,23 @@ public class Message {
     private String url;
     private int type;
     private long sourceId;
+    private long receiveId;
+
+    public long getReceiveId() {
+        return receiveId;
+    }
+
+    public void setReceiveId(long receiveId) {
+        this.receiveId = receiveId;
+    }
+
+    public long getSourceId() {
+        return sourceId;
+    }
+
+    public void setSourceId(long sourceId) {
+        this.sourceId = sourceId;
+    }
 
     public long getId() {
         return id;

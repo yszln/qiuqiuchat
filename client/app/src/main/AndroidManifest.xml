@@ -12,7 +12,9 @@
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name="com.yszln.qiuqiu.ui.splash.SplashActivity" android:theme="@style/Splash">
+        <activity
+            android:name="com.yszln.qiuqiu.ui.splash.SplashActivity"
+            android:theme="@style/Splash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,6 +28,7 @@
         <service android:name=".service.SocketService" />
 
         <activity android:name=".ui.main.view.MainActivity"></activity>
+        <activity android:name=".ui.chat.view.ChatActivity" />
     </application>
 
 </manifest>

@@ -5,6 +5,10 @@
         android:icon="@drawable/ic_chat"
         android:title="@string/chat" />
     <item
+        android:id="@+id/main_linkman"
+        android:icon="@drawable/ic_linkman"
+        android:title="@string/linkman" />
+    <item
         android:id="@+id/main_mine"
         android:icon="@drawable/ic_mine"
         android:title="@string/my" />

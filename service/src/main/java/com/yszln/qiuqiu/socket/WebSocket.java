@@ -2,9 +2,13 @@ package com.yszln.qiuqiu.socket;
 
 
 import com.alibaba.fastjson.JSON;
-import com.yszln.qiuqiu.entity.BaseBean;
+import com.yszln.qiuqiu.bean.ErrorBean;
 import com.yszln.qiuqiu.entity.Login;
+import com.yszln.qiuqiu.entity.Member;
+import com.yszln.qiuqiu.entity.SendMessageBean;
 import com.yszln.qiuqiu.service.LoginService;
+import com.yszln.qiuqiu.service.MemberService;
+import com.yszln.qiuqiu.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -33,8 +37,12 @@ public class WebSocket {
      */
     public String token;
 
+    public Member loginMember;
 
-    private static LoginService loginService;
+
+    private static MemberService memberService;
+
+    private static MessageService messageService;
 
 
     @OnOpen
@@ -42,20 +50,26 @@ public class WebSocket {
         this.session = session;
         this.token = token;
         // name是用来表示唯一客户端，如果需要指定发送，需要指定发送通过name来区分
-        Login byToken = loginService.findByToken(token);
-        if (null != byToken) {
+        loginMember = memberService.findLoginMember(token);
+        if (null != loginMember) {
             //链接
             webSocketSet.put(token, this);
             System.out.println("[WebSocket] 连接成功，当前连接人数为：" + webSocketSet.size());
         } else {
-            try {
-                session.getBasicRemote().sendText(JSON.toJSONString(new BaseBean(500, "请登录", null)));
-                session.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
+            closeSocket();
+
         }
 
+    }
+
+    private void closeSocket() {
+        try {
+            session.getBasicRemote().sendText(JSON.toJSONString(new ErrorBean<>("请登录", null)));
+            session.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
@@ -67,18 +81,34 @@ public class WebSocket {
 
     @OnMessage
     public void OnMessage(String message) {
+        if(null==message||"".equals(message)){
+            System.out.println("[WebSocket] 心跳检测：" +loginMember.getId());
+            return;
+        }
+        if (null == loginMember) {
+            closeSocket();
+            return;
+        }
+        try {
+            SendMessageBean sendMessageBean = JSON.parseObject(message, SendMessageBean.class);
+            messageService.sendMessage(sendMessageBean,loginMember.getId() );
+        } catch (Exception e) {
+            System.out.println("发送失败：" + e.getMessage());
+        }
 
-        System.out.println("[WebSocket] 收到消息：" + message + ",session:" + session.getId() );
+        System.out.println("[WebSocket] 收到消息：" + message + ",session:" + session.getId());
         //判断是否需要指定发送，具体规则自定义
 
     }
 
 
-
-
+    @Autowired
+    public void setMemberService(MemberService service) {
+        this.memberService = service;
+    }
 
     @Autowired
-    public void setLoginService(LoginService loginService) {
-        this.loginService = loginService;
+    public void setMessageService(MessageService service) {
+        this.messageService = service;
     }
 }

@@ -1,8 +1,6 @@
 package com.yszln.lib.network
 
-import com.yszln.lib.BaseApplication
 import com.yszln.lib.utils.ToastUtils
-import java.lang.RuntimeException
 
 /**
 * @author: yszln

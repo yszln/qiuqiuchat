@@ -8,5 +8,9 @@ object JsonUtils {
         return Gson().toJson(any)
     }
 
+    fun <T> format(json: String, clazz: Class<T>): T {
+        return Gson().fromJson(json, clazz)
+    }
+
 
 }

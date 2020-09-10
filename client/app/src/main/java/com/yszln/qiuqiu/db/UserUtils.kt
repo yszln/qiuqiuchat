@@ -2,14 +2,16 @@ package com.yszln.qiuqiu.db
 
 import android.text.TextUtils
 import com.yszln.lib.utils.SPUtils
+import com.yszln.lib.utils.start
 import com.yszln.qiuqiu.db.table.TbUser
 import com.yszln.qiuqiu.ui.login.model.LoginBean
+import com.yszln.qiuqiu.ui.login.view.LoginActivity
 import com.yszln.qiuqiu.utils.Constant
 
 object UserUtils {
 
     fun isLogin(): Boolean {
-        return null != getLoginUser()&&!TextUtils.isEmpty(getToken())
+        return null != getLoginUser() && !TextUtils.isEmpty(getToken())
     }
 
     fun getLoginUser(): TbUser {
@@ -21,6 +23,7 @@ object UserUtils {
             true
         } else {
             //去登录
+            start(LoginActivity::class.java)
             false
         }
     }

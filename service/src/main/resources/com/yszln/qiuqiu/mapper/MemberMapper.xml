@@ -16,4 +16,11 @@
     <insert id="register" parameterType="Map">
         insert into tb_member (username,password) values (#{username},#{password})
     </insert>
+    <select id="findMemberCount" parameterType="String"  resultType="int">
+        select count(*) from tb_member where username=#{username}
+    </select>
+
+    <select id="findMemberByToken" resultType="com.yszln.qiuqiu.entity.Member" parameterType="String">
+        SELECT * from tb_member where id = (SELECT memberId FROM  tb_login WHERE token=#{token} limit 0,1) limit 0,1
+    </select>
 </mapper>

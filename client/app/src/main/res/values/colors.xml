@@ -9,5 +9,6 @@
     <color name="blue_wx">#576B95</color>
     <color name="blue_wx2">#C0CAD5</color>
     <color name="red_wx">#FF3B30</color>
+    <color name="line" >@color/gray_ed</color>
 
 </resources>

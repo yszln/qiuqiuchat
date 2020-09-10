@@ -1,9 +1,9 @@
 package com.yszln.qiuqiu.service.impl;
 
-import com.yszln.qiuqiu.entity.BaseBean;
-import com.yszln.qiuqiu.entity.Login;
-import com.yszln.qiuqiu.entity.LoginSuccessBean;
-import com.yszln.qiuqiu.entity.Member;
+import com.yszln.qiuqiu.bean.BaseBean;
+import com.yszln.qiuqiu.bean.ErrorBean;
+import com.yszln.qiuqiu.bean.SuccessBean;
+import com.yszln.qiuqiu.entity.*;
 import com.yszln.qiuqiu.mapper.LoginMapper;
 import com.yszln.qiuqiu.mapper.MemberMapper;
 import com.yszln.qiuqiu.service.MemberService;
@@ -29,6 +29,10 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public int register(String username, String password) {
+        int memberCount = memberMapper.findMemberCount(username);
+        if(memberCount>0){
+            return -1;
+        }
         return memberMapper.register(username, MD5Utils.stringToMD5(password));
     }
 
@@ -43,11 +47,16 @@ public class MemberServiceImpl implements MemberService {
             loginUser.setPassword(null);
             int insert = loginMapper.insert(new Login(loginUser.getId(), token));
             if (insert > 0) {
-                return new BaseBean<>(200, "success", loginSuccessBean);
+                return new SuccessBean<>( "success", loginSuccessBean);
             }
-            return new BaseBean<>(500, "登陆异常", null);
+            return new ErrorBean<>( "登陆异常", null);
         }
-        return new BaseBean<>(500, "账号或者密码错误", null);
+        return new ErrorBean<>( "账号或者密码错误", null);
 
+    }
+
+    @Override
+    public Member findLoginMember(String token) {
+        return memberMapper.findMemberByToken(token);
     }
 }

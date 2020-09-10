@@ -1,10 +1,9 @@
 package com.yszln.lib.utils
 
-import android.content.Context
 import android.content.res.Resources
 import android.graphics.Rect
 import android.view.View
-import com.yszln.lib.BaseApplication
+import com.yszln.lib.app.BaseApplication
 
 object ScreenUtil {
     /**
@@ -49,14 +48,14 @@ object ScreenUtil {
      * 根据手机的分辨率px(像素) 转成dp
      */
     fun pxToDp(pxValue: Float): Int {
-        val scale = BaseApplication.mContext.resources.displayMetrics.density
+        val scale = BaseApplication.instance.resources.displayMetrics.density
         return (pxValue / scale + 0.5f).toInt()
     }
 
 
     fun spToPx(sp: Float): Float {
         val scale: Float =
-            BaseApplication.mContext.resources.displayMetrics.scaledDensity
+            BaseApplication.instance.resources.displayMetrics.scaledDensity
         return sp * scale
     }
 

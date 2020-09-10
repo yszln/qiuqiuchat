@@ -5,6 +5,7 @@
     <select id="findById" resultType="com.yszln.qiuqiu.entity.Login" parameterType="long">
         SELECT * FROM  tb_login WHERE memberId=#{memberId}
     </select>
+
     <select id="findByToken" resultType="com.yszln.qiuqiu.entity.Login" parameterType="String">
         SELECT * FROM  tb_login WHERE token=#{token}
     </select>

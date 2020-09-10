@@ -5,4 +5,7 @@
     <select id="findAll" resultType="com.yszln.qiuqiu.entity.Message">
         select * from  tb_message
     </select>
+    <insert id="insert" parameterType="com.yszln.qiuqiu.entity.Message">
+         insert into tb_message (content,url,`type`,sourceId,receiveId) values (#{content},#{url},#{type},#{sourceId},#{receiveId})
+    </insert>
 </mapper>

@@ -1,4 +1,4 @@
-package com.yszln.qiuqiu.entity;
+package com.yszln.qiuqiu.bean;
 
 public class BaseBean<T> {
     private int code;

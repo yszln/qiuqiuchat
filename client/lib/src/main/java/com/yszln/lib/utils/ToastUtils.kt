@@ -1,9 +1,7 @@
 package com.yszln.lib.utils
 
-import android.os.Handler
-import android.os.Looper
 import android.widget.Toast
-import com.yszln.lib.BaseApplication
+import com.yszln.lib.app.BaseApplication
 
 
 object ToastUtils {
@@ -16,7 +14,7 @@ object ToastUtils {
         message: CharSequence
     ) {
         mToast?.cancel()
-        mToast = Toast.makeText(BaseApplication.mContext, message, Toast.LENGTH_SHORT)
+        mToast = Toast.makeText(BaseApplication.instance, message, Toast.LENGTH_SHORT)
         mToast?.show()
 
 

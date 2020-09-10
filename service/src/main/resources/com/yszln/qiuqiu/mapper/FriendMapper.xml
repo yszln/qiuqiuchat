@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.yszln.qiuqiu.mapper.FriendMapper">
+    <select id="findByMemberId" resultType="com.yszln.qiuqiu.entity.Member" parameterType="long">
+        select id,avatar,username from  tb_member where id in (select friendId from tb_friend where memberId=#{id})
+    </select>
+</mapper>

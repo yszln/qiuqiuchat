@@ -1,5 +1,8 @@
 package com.yszln.qiuqiu.socket;
 
+import com.alibaba.fastjson.JSON;
+import com.yszln.qiuqiu.entity.Message;
+
 import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -20,6 +23,19 @@ public class SocketUtils {
                 socket.session.getBasicRemote().sendText(message);
             } catch (IOException e) {
                 e.printStackTrace();
+            }
+        }
+    }
+
+    public static void sendMessage(String receiverToken, Message message) {
+        for (String key : webSocketSet.keySet()) {
+            if (key.equals(receiverToken)) {
+                try {
+                    webSocketSet.get(key).session.getBasicRemote().sendText(JSON.toJSONString(message));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println(e.getMessage());
+                }
             }
         }
     }

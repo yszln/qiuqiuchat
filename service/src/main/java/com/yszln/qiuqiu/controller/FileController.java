@@ -1,19 +1,14 @@
 package com.yszln.qiuqiu.controller;
 
-import com.yszln.qiuqiu.entity.BaseBean;
+import com.yszln.qiuqiu.bean.BaseBean;
+import com.yszln.qiuqiu.bean.ErrorBean;
+import com.yszln.qiuqiu.bean.SuccessBean;
 import com.yszln.qiuqiu.service.FileService;
-import com.yszln.qiuqiu.utils.Utils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.DigestUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -28,8 +23,8 @@ public class FileController {
     public BaseBean uploadFile(@RequestParam("files") MultipartFile files[], HttpServletRequest request) {
         List<String> paths = fileService.uploadFile(files);
         if(null==paths){
-            return new BaseBean(500, "上传失败", null);
+            return new ErrorBean<>( "上传失败", null);
         }
-        return new BaseBean(200, "上传成功", paths);
+        return new SuccessBean<>( "上传成功", paths);
     }
 }

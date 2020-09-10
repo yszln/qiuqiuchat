@@ -1,6 +1,5 @@
 package com.yszln.qiuqiu.service.impl;
 
-import com.yszln.qiuqiu.entity.BaseBean;
 import com.yszln.qiuqiu.service.FileService;
 import com.yszln.qiuqiu.utils.Utils;
 import org.springframework.stereotype.Service;

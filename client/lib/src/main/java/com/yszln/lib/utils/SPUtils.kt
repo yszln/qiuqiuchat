@@ -2,13 +2,13 @@ package com.yszln.lib.utils
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.yszln.lib.BaseApplication
+import com.yszln.lib.app.BaseApplication
 
 object SPUtils {
     private const val spName = "wanAndroidCache"
 
     val mSp: SharedPreferences =
-        BaseApplication.mContext.getSharedPreferences(spName, Context.MODE_PRIVATE)
+        BaseApplication.instance.getSharedPreferences(spName, Context.MODE_PRIVATE)
 
 
     public fun get(key: String): String? {
