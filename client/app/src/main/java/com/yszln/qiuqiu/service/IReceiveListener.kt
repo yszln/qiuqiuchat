@@ -1,4 +1,4 @@
-package com.yszln.qiuqiu.api
+package com.yszln.qiuqiu.service
 
 import com.yszln.lib.utils.LogUtil
 import okhttp3.Response

@@ -9,7 +9,52 @@ public class Message {
     private String url;
     private int type;
     private long sourceId;
+    private String sourceName;
+    private String sourceAvatar;
     private long receiveId;
+    private String receiveName;
+    private String receiveAvatar;
+    private long time;
+
+    public long getTime() {
+        return time;
+    }
+
+    public void setTime(long time) {
+        this.time = time;
+    }
+
+    public String getReceiveAvatar() {
+        return receiveAvatar;
+    }
+
+    public void setReceiveAvatar(String receiveAvatar) {
+        this.receiveAvatar = receiveAvatar;
+    }
+
+    public String getSourceAvatar() {
+        return sourceAvatar;
+    }
+
+    public void setSourceAvatar(String sourceAvatar) {
+        this.sourceAvatar = sourceAvatar;
+    }
+
+    public String getSourceName() {
+        return sourceName;
+    }
+
+    public void setSourceName(String sourceName) {
+        this.sourceName = sourceName;
+    }
+
+    public String getReceiveName() {
+        return receiveName;
+    }
+
+    public void setReceiveName(String receiveName) {
+        this.receiveName = receiveName;
+    }
 
     public long getReceiveId() {
         return receiveId;

@@ -2,20 +2,16 @@ package com.yszln.qiuqiu.socket;
 
 
 import com.alibaba.fastjson.JSON;
+import com.yszln.qiuqiu.bean.BaseBean;
 import com.yszln.qiuqiu.bean.ErrorBean;
-import com.yszln.qiuqiu.entity.Login;
 import com.yszln.qiuqiu.entity.Member;
 import com.yszln.qiuqiu.entity.SendMessageBean;
-import com.yszln.qiuqiu.service.LoginService;
 import com.yszln.qiuqiu.service.MemberService;
 import com.yszln.qiuqiu.service.MessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import javax.websocket.OnClose;
-import javax.websocket.OnMessage;
-import javax.websocket.OnOpen;
-import javax.websocket.Session;
+import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
@@ -25,7 +21,7 @@ import static com.yszln.qiuqiu.socket.SocketUtils.webSocketSet;
 //@Slf4j
 @ServerEndpoint("/websocket/{token}")
 @Component
-public class WebSocket {
+public class WebSocketClient {
 
     /**
      * 与某个客户端的连接对话，需要通过它来给客户端发送消息
@@ -65,8 +61,8 @@ public class WebSocket {
 
     private void closeSocket() {
         try {
-            session.getBasicRemote().sendText(JSON.toJSONString(new ErrorBean<>("请登录", null)));
-            session.close();
+            session.getBasicRemote().sendText(JSON.toJSONString(new BaseBean(501,"请登录", null)));
+//            session.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -81,8 +77,8 @@ public class WebSocket {
 
     @OnMessage
     public void OnMessage(String message) {
-        if(null==message||"".equals(message)){
-            System.out.println("[WebSocket] 心跳检测：" +loginMember.getId());
+        if (null == message || "".equals(message)) {
+            System.out.println("[WebSocket] 心跳检测：" + loginMember.getId());
             return;
         }
         if (null == loginMember) {
@@ -91,7 +87,7 @@ public class WebSocket {
         }
         try {
             SendMessageBean sendMessageBean = JSON.parseObject(message, SendMessageBean.class);
-            messageService.sendMessage(sendMessageBean,loginMember.getId() );
+            messageService.sendMessage(sendMessageBean, loginMember);
         } catch (Exception e) {
             System.out.println("发送失败：" + e.getMessage());
         }
@@ -100,6 +96,11 @@ public class WebSocket {
         //判断是否需要指定发送，具体规则自定义
 
     }
+
+    /*@OnError
+    public void OnError(Session session, Throwable throwable) {
+        System.out.println(JSON.toJSONString(throwable));
+    }*/
 
 
     @Autowired

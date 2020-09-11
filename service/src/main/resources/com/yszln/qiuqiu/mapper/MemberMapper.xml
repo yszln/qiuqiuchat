@@ -9,6 +9,10 @@
             parameterType="String">
         select * from tb_member where username=#{username}
     </select>
+    <select id="findMemberById" resultType="com.yszln.qiuqiu.entity.Member"
+            parameterType="long">
+        select * from tb_member where id=#{id}
+    </select>
     <select id="login" resultType="com.yszln.qiuqiu.entity.Member"
             parameterType="Map">
         select * from tb_member where username=#{username} and password=#{password}
@@ -16,7 +20,7 @@
     <insert id="register" parameterType="Map">
         insert into tb_member (username,password) values (#{username},#{password})
     </insert>
-    <select id="findMemberCount" parameterType="String"  resultType="int">
+    <select id="findMemberCount" parameterType="String" resultType="int">
         select count(*) from tb_member where username=#{username}
     </select>
 

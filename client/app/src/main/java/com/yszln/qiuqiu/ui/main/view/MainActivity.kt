@@ -7,13 +7,12 @@ import com.yszln.lib.adapter.BaseFragmentAdapter
 import com.yszln.lib.fragment.BaseFragment
 import com.yszln.lib.utils.MyStatusBar
 import com.yszln.qiuqiu.R
-import com.yszln.qiuqiu.service.SocketService
+import com.yszln.qiuqiu.service.WebSocketService
 import com.yszln.qiuqiu.ui.main.model.NavBean
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : BaseActivity() {
-
 
 
     var mPagerAdapter = BaseFragmentAdapter<BaseFragment>(supportFragmentManager)
@@ -32,8 +31,9 @@ class MainActivity : BaseActivity() {
 
     override fun initView() {
         MyStatusBar(this)
-        val intent = Intent(this, SocketService::class.java)
+        val intent = Intent(this, WebSocketService::class.java)
         startService(intent)
+
 
 
         mainNav.setOnNavigationItemSelectedListener {
@@ -67,7 +67,6 @@ class MainActivity : BaseActivity() {
         }
         mainViewPager.adapter = mPagerAdapter
     }
-
 
 
 }

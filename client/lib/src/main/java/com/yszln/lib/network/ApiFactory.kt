@@ -25,15 +25,15 @@ object ApiFactory {
     /**
      * 创建OKHttp客户端
      */
-    private fun newClient(): OkHttpClient {
+    public fun newClient(): OkHttpClient {
         return OkHttpClient.Builder().apply {
             //连接超时时间
-            connectTimeout(5, TimeUnit.SECONDS)
+            connectTimeout(15, TimeUnit.SECONDS)
             //读取超时时间
-            readTimeout(10, TimeUnit.SECONDS)
+            readTimeout(15, TimeUnit.SECONDS)
             //写入超时时间
             writeTimeout(60, TimeUnit.SECONDS)
-                .pingInterval(1, TimeUnit.SECONDS)
+                .pingInterval(10000, TimeUnit.SECONDS)
             //debug模式添加日志拦截器
             if (BaseApplication.isDebug) {
                 addInterceptor(mLoggingInterceptor)

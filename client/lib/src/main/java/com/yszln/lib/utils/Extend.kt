@@ -1,10 +1,8 @@
 package com.yszln.lib.utils
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import com.yszln.lib.app.AppManageHelper
 import com.yszln.lib.app.BaseApplication
 
@@ -32,10 +30,12 @@ fun Any.getString(id: Int): String {
 }
 
 fun Any.start(clazz: Class<*>, bundle: Bundle? = null) {
-    val context = AppManageHelper.currentActivity()
-    val intent = Intent(context, clazz);
-    bundle?.let { intent.putExtras(it) }
-    context.startActivity(intent)
+    AppManageHelper.currentActivity().apply {
+        val intent = Intent(this, clazz);
+        bundle?.let { intent.putExtras(it) }
+        startActivity(intent)
+    }
+
 }
 
 

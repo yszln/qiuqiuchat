@@ -3,13 +3,17 @@
 
 <mapper namespace="com.yszln.qiuqiu.mapper.LoginMapper">
     <select id="findById" resultType="com.yszln.qiuqiu.entity.Login" parameterType="long">
-        SELECT * FROM  tb_login WHERE memberId=#{memberId}
+        SELECT * FROM  tb_login WHERE memberId=#{memberId} limit 0,1
     </select>
+
 
     <select id="findByToken" resultType="com.yszln.qiuqiu.entity.Login" parameterType="String">
         SELECT * FROM  tb_login WHERE token=#{token}
     </select>
     <insert id="insert" parameterType="com.yszln.qiuqiu.entity.Login">
-       insert into tb_login (memberId,token) values (#{memberId},#{token})
+       insert into tb_login (memberId,token,`time`) values (#{memberId},#{token},unix_timestamp(now()))
+    </insert>
+    <insert id="delete" parameterType="long">
+       DELETE FROM tb_login WHERE memberId=#{id}
     </insert>
 </mapper>

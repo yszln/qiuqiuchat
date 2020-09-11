@@ -8,24 +8,23 @@ import android.os.Looper
 import android.os.Message
 import com.yszln.lib.network.ApiFactory
 import com.yszln.lib.utils.LogUtil
-import com.yszln.lib.utils.ToastUtils
 import com.yszln.lib.utils.toast
 import com.yszln.qiuqiu.api.Api
-import com.yszln.qiuqiu.api.IReceiveListener
 import com.yszln.qiuqiu.db.UserUtils
 import okhttp3.Request
 import okhttp3.Response
 import okhttp3.WebSocket
 import okio.ByteString
 
-class SocketService : Service() {
+@Deprecated("鬼晓得除了啥问题")
+class OkSocketService : Service() {
 
 
     // 发送心跳包
     private val mHandler: Handler = MyHandler()
 
     // 每隔2秒发送一次心跳包，检测连接没有断开
-    private val HEART_BEAT_RATE = 1000L
+    private val HEART_BEAT_RATE = 10000L
 
     /**
      * socket连接
@@ -53,10 +52,9 @@ class SocketService : Service() {
     private val mReceiveListener by lazy { createListener() }
 
 
-    init {
-
+    override fun onCreate() {
+        super.onCreate()
         connectionSocket()
-
     }
 
     /**
@@ -98,6 +96,7 @@ class SocketService : Service() {
             mHandler.sendEmptyMessageDelayed(MESSAGE_HEART, HEART_BEAT_RATE)
         } else {
             //连接断开，重新连接
+            mHandler.removeCallbacksAndMessages(null)
             connectionSocket()
         }
 
@@ -150,6 +149,7 @@ class SocketService : Service() {
         mSocket = webSocket
         isConn = true
         //启动心跳检测
+        mHandler.removeCallbacksAndMessages(null)
         heartBeatRate()
     }
 
@@ -158,7 +158,8 @@ class SocketService : Service() {
      */
     private fun disConnection() {
         isConn = false
-//        mHandler.sendEmptyMessageDelayed(MESSAGE_HEART, HEART_BEAT_RATE)
+        mHandler.removeCallbacksAndMessages(null)
+        heartBeatRate();
     }
 
 

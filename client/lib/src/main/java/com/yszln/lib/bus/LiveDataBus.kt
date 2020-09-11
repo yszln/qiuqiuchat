@@ -1,9 +1,11 @@
 package com.yszln.lib.bus
 
+import android.os.Handler
+import android.os.Looper
 import androidx.lifecycle.MutableLiveData
 
 object LiveDataBus {
-
+    private val mHandler = Handler(Looper.getMainLooper())
     private val bus: MutableMap<String, MutableLiveData<Any>> = HashMap()
 
     fun getChannel(target: String): MutableLiveData<Any> {
@@ -15,4 +17,10 @@ object LiveDataBus {
         }
         return bus[target] ?: MutableLiveData();
     }
+
+    fun post(target: String, any: Any) {
+        mHandler.post { getChannel(target).value = any }
+    }
+
+
 }

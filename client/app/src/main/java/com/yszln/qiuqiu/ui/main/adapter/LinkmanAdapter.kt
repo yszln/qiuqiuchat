@@ -7,7 +7,7 @@ import com.yszln.lib.utils.start
 import com.yszln.lib.utils.toJson
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.table.TbUser
-import com.yszln.qiuqiu.ui.chat.view.ChatActivity
+import com.yszln.qiuqiu.ui.chat.view.FriendChatActivity
 import com.yszln.qiuqiu.utils.Constant
 
 class LinkmanAdapter : CommonAdapter<TbUser>(R.layout.item_rv_linkman) {
@@ -15,7 +15,7 @@ class LinkmanAdapter : CommonAdapter<TbUser>(R.layout.item_rv_linkman) {
     init {
         setOnItemClickListener { adapter, view, position ->
             start(
-                ChatActivity::class.java,
+                FriendChatActivity::class.java,
                 Bundle().apply { putString(Constant.JSON, data[position].toJson()) })
         }
     }

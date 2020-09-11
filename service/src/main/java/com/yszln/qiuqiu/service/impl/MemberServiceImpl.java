@@ -30,7 +30,7 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public int register(String username, String password) {
         int memberCount = memberMapper.findMemberCount(username);
-        if(memberCount>0){
+        if (memberCount > 0) {
             return -1;
         }
         return memberMapper.register(username, MD5Utils.stringToMD5(password));
@@ -45,13 +45,15 @@ public class MemberServiceImpl implements MemberService {
 
             LoginSuccessBean loginSuccessBean = new LoginSuccessBean(loginUser, token);
             loginUser.setPassword(null);
+            //删除旧的登录数据
+            loginMapper.delete(loginUser.getId());
             int insert = loginMapper.insert(new Login(loginUser.getId(), token));
             if (insert > 0) {
-                return new SuccessBean<>( "success", loginSuccessBean);
+                return new SuccessBean<>("success", loginSuccessBean);
             }
-            return new ErrorBean<>( "登陆异常", null);
+            return new ErrorBean<>("登陆异常", null);
         }
-        return new ErrorBean<>( "账号或者密码错误", null);
+        return new ErrorBean<>("账号或者密码错误", null);
 
     }
 

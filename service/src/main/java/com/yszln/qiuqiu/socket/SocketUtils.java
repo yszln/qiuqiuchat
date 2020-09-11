@@ -10,7 +10,7 @@ public class SocketUtils {
     /**
      * 用于存所有的连接服务的客户端
      */
-    public static ConcurrentHashMap<String, WebSocket> webSocketSet = new ConcurrentHashMap<>();
+    public static ConcurrentHashMap<String, WebSocketClient> webSocketSet = new ConcurrentHashMap<>();
 
     /**
      * 群发
@@ -18,11 +18,15 @@ public class SocketUtils {
      * @param message
      */
     public static void GroupSending(String message) {
-        for (WebSocket socket : webSocketSet.values()) {
+        for (WebSocketClient socket : webSocketSet.values()) {
             try {
-                socket.session.getBasicRemote().sendText(message);
+                if(socket.session.isOpen()){
+                    socket.session.getBasicRemote().sendText(message);
+                }
+
             } catch (IOException e) {
                 e.printStackTrace();
+                System.out.println("onError:"+e.getMessage());
             }
         }
     }
@@ -34,7 +38,7 @@ public class SocketUtils {
                     webSocketSet.get(key).session.getBasicRemote().sendText(JSON.toJSONString(message));
                 } catch (IOException e) {
                     e.printStackTrace();
-                    System.out.println(e.getMessage());
+                    System.out.println("onError:"+e.getMessage());
                 }
             }
         }

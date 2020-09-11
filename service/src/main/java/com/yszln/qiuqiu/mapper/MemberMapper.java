@@ -20,4 +20,6 @@ public interface MemberMapper {
     int findMemberCount(String usesrname);
 
     Member findMemberByToken(String token);
+
+    Member findMemberById(long id);
 }
