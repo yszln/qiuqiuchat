@@ -1,8 +1,6 @@
 package com.yszln.qiuqiu.db.table
 
-import androidx.room.Entity
-import androidx.room.Ignore
-import androidx.room.PrimaryKey
+import androidx.room.*
 
 @Entity(tableName = "tb_chat")
 data class TbChat(
@@ -15,3 +13,17 @@ data class TbChat(
     @Ignore
     var message: TbMessage
 )
+
+/*
+data class FriendWithGiftList (
+
+    @Embedded
+    var friendInfo: FriendInfo,
+
+    @Relation(parentColumn = "friendId", // 这个参数来自于FriendInfo的唯一Key
+        entityColumn = "giftId", // 这个参数来自于GiftInfo的唯一Key
+        entity = GiftInfo::class,
+        associateBy = Junction(FriendGiftRelation::class))
+    var giftList: List<GiftInfo>
+) : Serializable
+*/
