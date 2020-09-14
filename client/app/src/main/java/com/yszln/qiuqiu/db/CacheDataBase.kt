@@ -9,7 +9,7 @@ import com.yszln.qiuqiu.db.dao.UserDao
 import com.yszln.qiuqiu.db.table.TbMessage
 import com.yszln.qiuqiu.db.table.TbUser
 
-@Database(entities = [TbMessage::class, TbUser::class], version =6)
+@Database(entities = [TbMessage::class, TbUser::class], version =7)
 abstract class CacheDataBase : RoomDatabase() {
 
     abstract fun messageDao(): MessageDao
