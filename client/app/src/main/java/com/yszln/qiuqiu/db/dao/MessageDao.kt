@@ -11,5 +11,5 @@ interface MessageDao : BaseDao<TbMessage> {
     fun findAll(): MutableList<TbMessage>
 
     @Query("select * from tb_message where sourceId=:sourceId or sourceId=:receiveId or receiveId=:sourceId or receiveId=:receiveId")
-    fun findFriendMessage(sourceId:Long,receiveId:Long): MutableList<TbMessage>
+    fun findFriendMessage(sourceId:Long?,receiveId:Long): MutableList<TbMessage>
 }

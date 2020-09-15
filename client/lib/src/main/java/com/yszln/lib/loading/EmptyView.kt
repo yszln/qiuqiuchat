@@ -7,6 +7,7 @@ import android.widget.FrameLayout
 import com.yszln.lib.R
 import com.yszln.lib.activity.BaseVMActivity
 import com.yszln.lib.fragment.BaseVMFragment
+import com.yszln.lib.viewmodel.RefreshViewModel
 import kotlinx.android.synthetic.main.layout_empty.view.*
 
 /**

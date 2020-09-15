@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:paddingHorizontal="@dimen/_15dp"
+    android:paddingVertical="@dimen/_5dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/item_rv_home_chat_avatar"
+        android:layout_width="@dimen/_45dp"
+        android:layout_height="@dimen/_45dp"
+        android:src="@mipmap/qiuqiu"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_rv_home_chat_username"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_12dp"
+        android:text="username"
+        app:layout_constraintStart_toEndOf="@+id/item_rv_home_chat_avatar"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/item_rv_home_chat_content"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_8dp"
+        android:textColor="@color/gray_bf"
+        android:layout_marginRight="@dimen/_12dp"
+        android:lines="1"
+        app:layout_constraintEnd_toStartOf="@+id/item_rv_home_chat_time"
+        app:layout_constraintStart_toStartOf="@+id/item_rv_home_chat_username"
+        app:layout_constraintTop_toBottomOf="@+id/item_rv_home_chat_username"
+        tools:text="content" />
+
+    <TextView
+        android:id="@+id/item_rv_home_chat_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        tools:text="20:00"
+        android:textColor="@color/gray_bf"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/item_rv_home_chat_content" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

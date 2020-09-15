@@ -7,6 +7,6 @@ import androidx.room.PrimaryKey
 data class TbUser(
     @PrimaryKey var id: Long,
     var username: String,
-    var avatar: String?,
+    var avatar: String,
     var status: Int
 )

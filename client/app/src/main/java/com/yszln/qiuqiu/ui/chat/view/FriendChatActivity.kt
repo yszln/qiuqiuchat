@@ -9,12 +9,14 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yszln.lib.activity.BaseVMActivity
 import com.yszln.lib.bus.LiveDataBus
+import com.yszln.lib.utils.LogUtil
 import com.yszln.lib.utils.jsonFormat
 import com.yszln.lib.utils.textStr
 import com.yszln.lib.utils.toJson
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.CacheDataBase
 import com.yszln.qiuqiu.db.UserUtils
+import com.yszln.qiuqiu.db.table.TbChat
 import com.yszln.qiuqiu.db.table.TbMessage
 import com.yszln.qiuqiu.db.table.TbUser
 import com.yszln.qiuqiu.service.WebSocketService
@@ -24,6 +26,7 @@ import com.yszln.qiuqiu.ui.chat.model.SendMessageBean
 import com.yszln.qiuqiu.ui.chat.viewmodel.ChatViewModel
 import com.yszln.qiuqiu.utils.Constant
 import kotlinx.android.synthetic.main.activity_chat.*
+import java.lang.Exception
 
 class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
 
@@ -44,8 +47,17 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
             if (message.sourceId == mUser?.id) {
                 //是当前聊天的数据
                 mAdapter.addData(message)
+                scrollBottom()
             }
         })
+    }
+
+    private fun scrollBottom() {
+        try {
+            mRecyclerView.smoothScrollToPosition(mAdapter.itemCount - 1)
+        } catch (e: Exception) {
+        }
+
     }
 
     override fun layoutId() = R.layout.activity_chat
@@ -54,11 +66,12 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = LinearLayoutManager(this)
         initData()
+        LogUtil.e(CacheDataBase.instance.messageDao().findAll().toJson())
         CacheDataBase.instance.messageDao()
-            .findFriendMessage(mUser?.id ?: 0L, UserUtils.getLoginUser().id).apply {
+            .findFriendMessage(mUser?.id, UserUtils.getLoginUser().id).apply {
                 mAdapter.setNewInstance(this)
-                if(size>0){
-                    mRecyclerView.smoothScrollToPosition(mAdapter.data.size-1)
+                if (size > 0) {
+                    mRecyclerView.smoothScrollToPosition(mAdapter.data.size - 1)
                 }
 
             }
@@ -75,6 +88,7 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
     override fun onClick() {
         chatSend.setOnClickListener {
             val text = chatInput.textStr()
+            if (text.isEmpty()) return@setOnClickListener
             chatInput.setText("")
             val sendMessageBean = SendMessageBean(
                 mUser?.id,
@@ -83,18 +97,47 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
             )
             mChantService.send(sendMessageBean.toJson())
             val tbMessage = TbMessage(
-                0, text,
+                null,
+                text,
                 "",
                 ChatEnum.MESSAGE_TEXT.value,
                 mUser?.id!!,
-                "",
+                mUser?.username ?: "",
+                mUser?.avatar ?: "",
                 UserUtils.getLoginUser().id,
                 UserUtils.getLoginUser().username,
+                UserUtils.getLoginUser().avatar,
                 System.currentTimeMillis(),
                 ChatEnum.ONESELF.value
             )
+            setChat(tbMessage)
+            CacheDataBase.instance.messageDao().insert(tbMessage)
             mAdapter.addData(tbMessage)
+            scrollBottom()
         }
+    }
+
+    private fun setChat(tbMessage: TbMessage) {
+        tbMessage.apply {
+            val findByFriend = CacheDataBase.instance.chatDao().findByFriend(receiveId)
+            if (findByFriend.size < 1) {
+                val tbChat = TbChat(
+                    null,
+                    content,
+                    receiveId,
+                    receiveName,
+                    receiveAvatar,
+                    System.currentTimeMillis()
+                )
+                CacheDataBase.instance.chatDao().insert(tbChat)
+            } else {
+                findByFriend[0].content = content
+                findByFriend[0].time = System.currentTimeMillis()
+                CacheDataBase.instance.chatDao().deleteByFriend(receiveId)
+                CacheDataBase.instance.chatDao().update(findByFriend[0])
+            }
+        }
+
     }
 
     override fun onDestroy() {

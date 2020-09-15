@@ -40,6 +40,7 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
                 //缓存
                 UserUtils.login(it)
                 start(MainActivity::class.java)
+                finish()
             })
         }
     }

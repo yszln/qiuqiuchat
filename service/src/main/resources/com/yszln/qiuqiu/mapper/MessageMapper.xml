@@ -5,7 +5,7 @@
     <select id="findAll" resultType="com.yszln.qiuqiu.entity.Message">
         select * from  tb_message
     </select>
-    <insert id="insert" parameterType="com.yszln.qiuqiu.entity.Message"  useGeneratedKeys="true">
+    <insert id="insert" parameterType="com.yszln.qiuqiu.entity.Message"  useGeneratedKeys="true" keyColumn="id" keyProperty="id">
          insert into tb_message (content,url,`type`,sourceId,receiveId,`time`) values (#{content},#{url},#{type},#{sourceId},#{receiveId},unix_timestamp(now()))
     </insert>
 </mapper>

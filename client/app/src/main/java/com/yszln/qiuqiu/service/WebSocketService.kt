@@ -15,6 +15,7 @@ import com.yszln.lib.utils.jsonFormat
 import com.yszln.qiuqiu.api.Api
 import com.yszln.qiuqiu.db.CacheDataBase
 import com.yszln.qiuqiu.db.UserUtils
+import com.yszln.qiuqiu.db.table.TbChat
 import com.yszln.qiuqiu.db.table.TbMessage
 import com.yszln.qiuqiu.ui.chat.model.ChatEnum
 import com.yszln.qiuqiu.utils.Constant
@@ -155,11 +156,36 @@ class WebSocketService : Service() {
      */
     private fun handlerMessage(websocket: WebSocket, text: String) {
         text.jsonFormat(TbMessage::class.java).apply {
+            id = null
             itemType = ChatEnum.OTHER.value
             CacheDataBase.instance.messageDao().insert(this)
+            setChat(this)
             LiveDataBus.post(Constant.SEND_MESSAGE, this)
         }
 
+
+    }
+
+    private fun setChat(tbMessage: TbMessage) {
+        tbMessage.apply {
+            val findByFriend = CacheDataBase.instance.chatDao().findByFriend(sourceId)
+            if (findByFriend.size < 1) {
+                val tbChat = TbChat(
+                    null,
+                    content,
+                    sourceId,
+                    sourceName,
+                    sourceAvatar,
+                    System.currentTimeMillis()
+                )
+                CacheDataBase.instance.chatDao().insert(tbChat)
+            } else {
+                findByFriend[0].content = content
+                findByFriend[0].time = System.currentTimeMillis()
+                CacheDataBase.instance.chatDao().deleteByFriend(sourceId)
+                CacheDataBase.instance.chatDao().update(findByFriend[0])
+            }
+        }
 
     }
 

@@ -33,9 +33,9 @@ public class MessageServiceImpl implements MessageService {
         //插入消息
         Message message = sendMessageBean.toMessage();
 
-        int messageId = messageMapper.insert(message);
+      messageMapper.insert(message);
         //通知用户
-        message.setId(messageId);
+
         message.setSourceId(sendMember.getId());
         message.setSourceName(sendMember.getUsername());
         message.setSourceAvatar(sendMember.getAvatar());
