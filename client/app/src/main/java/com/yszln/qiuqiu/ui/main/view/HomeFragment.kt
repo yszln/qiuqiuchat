@@ -1,6 +1,8 @@
 package com.yszln.qiuqiu.ui.main.view
 
 import com.yszln.lib.fragment.BaseVMFragment
+import com.yszln.lib.utils.LogUtil
+import com.yszln.lib.utils.toJson
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.CacheDataBase
 import com.yszln.qiuqiu.ui.main.adapter.HomeChatAdapter
@@ -9,21 +11,22 @@ import kotlinx.android.synthetic.main.fragment_home.*
 
 class HomeFragment : BaseVMFragment<HomeViewModel>() {
 
-    private val mAdapter=HomeChatAdapter()
+    private val mAdapter = HomeChatAdapter()
 
     override fun refreshData() {
         CacheDataBase.instance.chatDao().findAll().apply {
+            LogUtil.e(toJson())
             mAdapter.setList(this)
         }
     }
 
     override fun initView() {
-        mRecyclerView.adapter=mAdapter
+        mRecyclerView.adapter = mAdapter
     }
 
     override fun observe() {
 
     }
 
-    override fun layoutId()= R.layout.fragment_home
+    override fun layoutId() = R.layout.fragment_home
 }

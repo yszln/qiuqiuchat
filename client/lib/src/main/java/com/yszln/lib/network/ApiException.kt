@@ -1,5 +1,6 @@
 package com.yszln.lib.network
 
+import com.yszln.lib.utils.LogUtil
 import com.yszln.lib.utils.ToastUtils
 
 /**
@@ -12,8 +13,9 @@ class ApiException(val code: Int, message: String) : Exception(message) {
 
 
     init {
+        LogUtil.e("apiException:$message")
         ToastUtils.showToast(message)
-        ApiExceptionHandler.mApiExceptionListener?.onError(code,message)
+        ApiExceptionHandler.mApiExceptionListener?.onError(code, message)
     }
 
 

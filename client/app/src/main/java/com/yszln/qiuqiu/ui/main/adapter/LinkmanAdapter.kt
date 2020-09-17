@@ -1,8 +1,9 @@
 package com.yszln.qiuqiu.ui.main.adapter
 
 import android.os.Bundle
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.yszln.lib.adapter.CommonAdapter
-import com.yszln.lib.adapter.CommonViewHolder
+import com.yszln.lib.adapter.loadRound
 import com.yszln.lib.utils.start
 import com.yszln.lib.utils.toJson
 import com.yszln.qiuqiu.R
@@ -20,8 +21,9 @@ class LinkmanAdapter : CommonAdapter<TbUser>(R.layout.item_rv_linkman) {
         }
     }
 
-    override fun convert(holder: CommonViewHolder, item: TbUser) {
+    override fun convert(holder: BaseViewHolder, item: TbUser) {
         holder.setText(R.id.item_rv_linkman_username, item.username)
+            .loadRound(R.id.item_rv_linkman_avatar, item.avatar,5)
     }
 
 

@@ -12,12 +12,14 @@ import com.yszln.lib.bus.LiveDataBus
 import com.yszln.lib.network.ApiExceptionHandler
 import com.yszln.lib.utils.LogUtil
 import com.yszln.lib.utils.jsonFormat
+import com.yszln.lib.utils.toJson
 import com.yszln.qiuqiu.api.Api
 import com.yszln.qiuqiu.db.CacheDataBase
 import com.yszln.qiuqiu.db.UserUtils
 import com.yszln.qiuqiu.db.table.TbChat
 import com.yszln.qiuqiu.db.table.TbMessage
 import com.yszln.qiuqiu.ui.chat.model.ChatEnum
+import com.yszln.qiuqiu.ui.chat.model.SendMessageBean
 import com.yszln.qiuqiu.utils.Constant
 import okio.ByteString
 
@@ -176,12 +178,12 @@ class WebSocketService : Service() {
                     sourceId,
                     sourceName,
                     sourceAvatar,
-                    System.currentTimeMillis()
+                    System.currentTimeMillis() / 1000
                 )
                 CacheDataBase.instance.chatDao().insert(tbChat)
             } else {
                 findByFriend[0].content = content
-                findByFriend[0].time = System.currentTimeMillis()
+                findByFriend[0].time = System.currentTimeMillis() / 1000
                 CacheDataBase.instance.chatDao().deleteByFriend(sourceId)
                 CacheDataBase.instance.chatDao().update(findByFriend[0])
             }
@@ -215,8 +217,8 @@ class WebSocketService : Service() {
      * 暴露方法
      */
     inner class MyBinder : Binder() {
-        fun send(message: String) {
-            mSocket.sendText(message)
+        fun send(receiverId: Long?, content: String, type: Int) {
+            mSocket.sendText(SendMessageBean(receiverId, content, type).toJson())
         }
 
         fun send(byte: ByteString) {

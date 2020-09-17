@@ -1,10 +1,14 @@
 package com.yszln.qiuqiu.ui.chat.view
 
+import android.Manifest
+import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
+import android.os.Handler
 import android.os.IBinder
+import android.view.MotionEvent
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yszln.lib.activity.BaseVMActivity
@@ -25,7 +29,10 @@ import com.yszln.qiuqiu.ui.chat.model.ChatEnum
 import com.yszln.qiuqiu.ui.chat.model.SendMessageBean
 import com.yszln.qiuqiu.ui.chat.viewmodel.ChatViewModel
 import com.yszln.qiuqiu.utils.Constant
+import com.yszln.qiuqiu.utils.MediaUtils
+import com.yszln.qiuqiu.weiget.VoiceView
 import kotlinx.android.synthetic.main.activity_chat.*
+import java.io.File
 import java.lang.Exception
 
 class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
@@ -50,11 +57,16 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
                 scrollBottom()
             }
         })
+        mViewModel.apply {
+            liveFiles.observe(this@FriendChatActivity, Observer {
+                sendMessage(it[0], ChatEnum.MESSAGE_VOICE)
+            })
+        }
     }
 
     private fun scrollBottom() {
         try {
-            mRecyclerView.smoothScrollToPosition(mAdapter.itemCount - 1)
+            mRecyclerView.scrollToPosition(mAdapter.itemCount - 1)
         } catch (e: Exception) {
         }
 
@@ -70,10 +82,7 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
         CacheDataBase.instance.messageDao()
             .findFriendMessage(mUser?.id, UserUtils.getLoginUser().id).apply {
                 mAdapter.setNewInstance(this)
-                if (size > 0) {
-                    mRecyclerView.smoothScrollToPosition(mAdapter.data.size - 1)
-                }
-
+                scrollBottom();
             }
         bindService(Intent(this, WebSocketService::class.java), mChatConn, Context.BIND_AUTO_CREATE)
     }
@@ -83,38 +92,52 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
             mUser = jsonFormat(TbUser::class.java)
         }
         mTitleBar.setTitle(mUser?.username)
+
     }
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onClick() {
         chatSend.setOnClickListener {
             val text = chatInput.textStr()
             if (text.isEmpty()) return@setOnClickListener
             chatInput.setText("")
-            val sendMessageBean = SendMessageBean(
-                mUser?.id,
-                text,
-                ChatEnum.MESSAGE_TEXT.value
-            )
-            mChantService.send(sendMessageBean.toJson())
-            val tbMessage = TbMessage(
-                null,
-                text,
-                "",
-                ChatEnum.MESSAGE_TEXT.value,
-                mUser?.id!!,
-                mUser?.username ?: "",
-                mUser?.avatar ?: "",
-                UserUtils.getLoginUser().id,
-                UserUtils.getLoginUser().username,
-                UserUtils.getLoginUser().avatar,
-                System.currentTimeMillis(),
-                ChatEnum.ONESELF.value
-            )
-            setChat(tbMessage)
-            CacheDataBase.instance.messageDao().insert(tbMessage)
-            mAdapter.addData(tbMessage)
-            scrollBottom()
+            sendMessage(text, ChatEnum.MESSAGE_TEXT)
         }
+
+        /*  chatVoice.onMediaListener = object : VoiceView.OnMediaListener {
+              override fun onEnd(file: File?) {
+                  LogUtil.e("录音路径：${file?.absolutePath}")
+              }
+          }*/
+
+        chatVoice.onMediaListener = object : VoiceView.OnMediaListener {
+            override fun onEnd(filePath: String) {
+                mViewModel.upload(mutableListOf(File(filePath)))
+            }
+
+        }
+    }
+
+    private fun sendMessage(text: String, chatEnum: ChatEnum) {
+        mChantService.send(mUser?.id, text, chatEnum.value)
+        val tbMessage = TbMessage(
+            null,
+            text,
+            "",
+            chatEnum.value,
+            mUser?.id!!,
+            mUser?.username ?: "",
+            mUser?.avatar ?: "",
+            UserUtils.getLoginUser().id,
+            UserUtils.getLoginUser().username,
+            UserUtils.getLoginUser().avatar,
+            System.currentTimeMillis() / 1000,
+            ChatEnum.ONESELF.value
+        )
+        setChat(tbMessage)
+        CacheDataBase.instance.messageDao().insert(tbMessage)
+        mAdapter.addData(tbMessage)
+        scrollBottom()
     }
 
     private fun setChat(tbMessage: TbMessage) {
@@ -127,12 +150,12 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
                     receiveId,
                     receiveName,
                     receiveAvatar,
-                    System.currentTimeMillis()
+                    System.currentTimeMillis() / 1000
                 )
                 CacheDataBase.instance.chatDao().insert(tbChat)
             } else {
                 findByFriend[0].content = content
-                findByFriend[0].time = System.currentTimeMillis()
+                findByFriend[0].time = System.currentTimeMillis() / 1000
                 CacheDataBase.instance.chatDao().deleteByFriend(receiveId)
                 CacheDataBase.instance.chatDao().update(findByFriend[0])
             }

@@ -15,17 +15,25 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-
-    <TextView
-        android:id="@+id/item_rv_message_text"
+    <FrameLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/line"
-        android:layout_marginRight="@dimen/_6dp"
         android:layout_marginTop="@dimen/_6dp"
-        android:padding="@dimen/_3dp"
-        android:text="message"
+        android:layout_marginLeft="@dimen/_35dp"
+        android:layout_marginRight="@dimen/_6dp"
         app:layout_constraintEnd_toStartOf="@+id/item_rv_message_avatar"
-        app:layout_constraintTop_toBottomOf="@+id/item_rv_message_username" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/item_rv_message_username">
+
+        <TextView
+            android:id="@+id/item_rv_message_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:background="@color/line"
+            android:padding="@dimen/_3dp"
+            android:text="message" />
+    </FrameLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

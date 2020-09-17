@@ -3,6 +3,7 @@ package com.yszln.qiuqiu.api
 import com.yszln.lib.bean.BaseBean
 import com.yszln.qiuqiu.db.table.TbUser
 import com.yszln.qiuqiu.ui.login.model.LoginBean
+import okhttp3.MultipartBody
 import retrofit2.http.*
 
 /**
@@ -31,7 +32,18 @@ interface ApiServer {
         @Field("password") password: String
     ): BaseBean<LoginBean>
 
+    /**
+     * 查询所有好友
+     */
     @POST("/friend/findAll")
     suspend fun getFriends(): BaseBean<MutableList<TbUser>>
+
+    /**
+     * 上传文件，支持多文件上传
+     * @param files
+     */
+    @POST("/file/upload")
+    @Multipart
+    suspend fun uploadFiles(@Part files: MutableList<MultipartBody.Part>): BaseBean<MutableList<String>>
 
 }

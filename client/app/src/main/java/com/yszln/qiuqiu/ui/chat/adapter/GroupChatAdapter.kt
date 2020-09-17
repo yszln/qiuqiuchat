@@ -1,7 +1,8 @@
 package com.yszln.qiuqiu.ui.chat.adapter
 
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
+
 import com.yszln.lib.adapter.CommonMultiItemLoadAdapter
-import com.yszln.lib.adapter.CommonViewHolder
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.table.TbMessage
 import com.yszln.qiuqiu.ui.chat.model.ChatEnum
@@ -18,7 +19,7 @@ class GroupChatAdapter : CommonMultiItemLoadAdapter<TbMessage>() {
     }
 
 
-    override fun convert(holder: CommonViewHolder, item: TbMessage) {
+    override fun convert(holder: BaseViewHolder, item: TbMessage) {
         holder.setText(R.id.item_rv_message_text,item.content)
         when(item.itemType){
             ChatEnum.ONESELF.value->{
@@ -32,14 +33,14 @@ class GroupChatAdapter : CommonMultiItemLoadAdapter<TbMessage>() {
 
     }
 
-    private fun setOtherConvert(holder: CommonViewHolder, item: TbMessage) {
+    private fun setOtherConvert(holder: BaseViewHolder, item: TbMessage) {
         item.apply {
             holder.setText(R.id.item_rv_message_username,sourceName)
 
         }
     }
 
-    private fun setOneselfConvert(holder: CommonViewHolder, item: TbMessage) {
+    private fun setOneselfConvert(holder: BaseViewHolder, item: TbMessage) {
         item.apply {
             holder.setText(R.id.item_rv_message_username,receiveName)
 

@@ -1,15 +1,14 @@
 package com.yszln.qiuqiu.ui.chat.adapter
 
-import android.os.Bundle
+import android.view.View
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.yszln.lib.adapter.CommonMultiItemLoadAdapter
-import com.yszln.lib.adapter.CommonViewHolder
-import com.yszln.lib.utils.start
-import com.yszln.lib.utils.toJson
+import com.yszln.lib.adapter.loadRound
+
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.table.TbMessage
 import com.yszln.qiuqiu.ui.chat.model.ChatEnum
-import com.yszln.qiuqiu.ui.chat.view.FriendChatActivity
-import com.yszln.qiuqiu.utils.Constant
+import com.yszln.qiuqiu.utils.MediaUtils
 
 /**
  * 好友聊天
@@ -23,26 +22,31 @@ class FriendChatAdapter : CommonMultiItemLoadAdapter<TbMessage>() {
     }
 
 
-    override fun convert(holder: CommonViewHolder, item: TbMessage) {
-        holder.setText(R.id.item_rv_message_text,item.content)
-        when(item.itemType){
-            ChatEnum.ONESELF.value->{
-                setOneselfConvert(holder,item)
+    override fun convert(holder: BaseViewHolder, item: TbMessage) {
+        holder.setText(R.id.item_rv_message_text, item.content)
+
+        when (item.itemType) {
+            ChatEnum.ONESELF.value -> {
+                setOneselfConvert(holder, item)
             }
-            ChatEnum.OTHER.value->{
-                setOtherConvert(holder,item)
+            ChatEnum.OTHER.value -> {
+                setOtherConvert(holder, item)
             }
+        }
+
+        holder.getView<View>(R.id.item_rv_message_text).setOnClickListener {
+            MediaUtils.startPlaying(item.content ?: "")
         }
 
 
     }
 
-    private fun setOtherConvert(holder: CommonViewHolder, item: TbMessage) {
-
+    private fun setOtherConvert(holder: BaseViewHolder, item: TbMessage) {
+        holder.loadRound(R.id.item_rv_message_avatar, item.sourceAvatar,5)
     }
 
-    private fun setOneselfConvert(holder: CommonViewHolder, item: TbMessage) {
-
+    private fun setOneselfConvert(holder: BaseViewHolder, item: TbMessage) {
+        holder.loadRound(R.id.item_rv_message_avatar, item.sourceAvatar,5)
     }
 
 

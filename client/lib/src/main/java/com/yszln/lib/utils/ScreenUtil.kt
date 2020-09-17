@@ -44,6 +44,8 @@ object ScreenUtil {
         return (dpValue * scale + 0.5f).toInt()
     }
 
+    fun dpToPx(dpValue: Int) = dpToPx(dpValue.toFloat())
+
     /**
      * 根据手机的分辨率px(像素) 转成dp
      */

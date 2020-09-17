@@ -21,10 +21,15 @@ public class FileController {
     @ResponseBody
     @PostMapping("/upload")
     public BaseBean uploadFile(@RequestParam("files") MultipartFile files[], HttpServletRequest request) {
+        if(files==null||files.length==0){
+            return new ErrorBean<>( "请选择需要上传的文件", null);
+        }
         List<String> paths = fileService.uploadFile(files);
         if(null==paths){
             return new ErrorBean<>( "上传失败", null);
         }
         return new SuccessBean<>( "上传成功", paths);
     }
+
+
 }

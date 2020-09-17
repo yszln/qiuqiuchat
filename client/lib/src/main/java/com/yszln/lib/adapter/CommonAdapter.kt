@@ -2,10 +2,11 @@ package com.yszln.lib.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.chad.library.adapter.base.BaseQuickAdapter
+import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.yszln.lib.loading.EmptyView
 
 abstract class CommonAdapter<T>(layoutResId: Int) :
-    BaseQuickAdapter<T, CommonViewHolder>(layoutResId) {
+    BaseQuickAdapter<T, BaseViewHolder>(layoutResId) {
 
     init {
         registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {

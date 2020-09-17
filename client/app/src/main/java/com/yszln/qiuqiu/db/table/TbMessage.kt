@@ -19,4 +19,4 @@ data class TbMessage(
     var sourceAvatar: String,
     var time: Long,//创建时间
     override var itemType: Int
-) : MultiItemEntity
+) : MultiItemEntity{}
