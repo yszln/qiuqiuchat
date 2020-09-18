@@ -8,7 +8,7 @@ interface BaseDao<T> {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(list: MutableList<T>)
 
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert(onConflict = OnConflictStrategy.ABORT)
     fun insert(t: T)
 
     @Delete

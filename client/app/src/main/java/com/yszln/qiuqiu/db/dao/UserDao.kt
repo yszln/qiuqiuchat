@@ -7,9 +7,14 @@ import com.yszln.qiuqiu.db.table.TbUser
 
 @Dao
 interface UserDao : BaseDao<TbUser> {
+
     @Query("SELECT * FROM tb_user LIMIT 0,1")
     fun findFirst(): TbUser
 
+    @Query("SELECT * FROM tb_user")
+    fun findAll(): MutableList<TbUser>
+
     @Query("DELETE FROM tb_user")
     fun deleteAll()
+
 }

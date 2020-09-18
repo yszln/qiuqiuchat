@@ -53,7 +53,7 @@ abstract class BaseVMFragment<VM : RefreshViewModel> : BaseFragment(),
         initRefresh()
         initView()
         observe()
-        initClick()
+        onClick()
 
     }
 
@@ -118,25 +118,8 @@ abstract class BaseVMFragment<VM : RefreshViewModel> : BaseFragment(),
     }
 
 
-    /**
-     * 请求数据
-     */
-    abstract fun refreshData()
 
-    /**
-     * 初始化view
-     */
-    abstract fun initView()
 
-    /**
-     * 点击事件
-     */
-    open fun initClick() {}
-
-    /**
-     * 设置观察者
-     */
-    abstract fun observe()
 
 
 }

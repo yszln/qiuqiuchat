@@ -3,7 +3,6 @@ package com.yszln.qiuqiu.db.dao
 import androidx.room.Dao
 import androidx.room.Query
 import com.yszln.qiuqiu.db.table.TbMessage
-import com.yszln.qiuqiu.db.table.TbUser
 
 @Dao
 interface MessageDao : BaseDao<TbMessage> {

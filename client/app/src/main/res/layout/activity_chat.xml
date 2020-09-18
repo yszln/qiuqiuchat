@@ -25,10 +25,11 @@
            android:orientation="horizontal">
            <com.yszln.qiuqiu.weiget.VoiceView
                android:id="@+id/chatVoice"
-               android:layout_width="@dimen/_25dp"
+               android:layout_width="@dimen/_45dp"
+               android:padding="@dimen/_8dp"
                android:src="@drawable/ic_voice"
                android:layout_gravity="center_vertical"
-               android:layout_height="@dimen/_25dp"/>
+               android:layout_height="match_parent"/>
 
            <EditText
                android:id="@+id/chatInput"

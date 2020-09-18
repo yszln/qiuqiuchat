@@ -3,6 +3,7 @@ package com.yszln.lib.network
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.yszln.lib.app.BaseApplication
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
@@ -38,7 +39,9 @@ object ApiFactory {
             if (BaseApplication.isDebug) {
                 addInterceptor(mLoggingInterceptor)
             }
-            addInterceptor(HeadInterceptor())
+            addInterceptor(
+                Class.forName("com.yszln.qiuqiu.api.HeadInterceptor").newInstance() as Interceptor
+            )
 
 //            cookieJar(mLoginCookie)
         }.build();

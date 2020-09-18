@@ -217,8 +217,8 @@ class WebSocketService : Service() {
      * 暴露方法
      */
     inner class MyBinder : Binder() {
-        fun send(receiverId: Long?, content: String, type: Int) {
-            mSocket.sendText(SendMessageBean(receiverId, content, type).toJson())
+        fun send(receiverId: Long?, content: String,url:String, type: Int) {
+            mSocket.sendText(SendMessageBean(receiverId, content,url, type).toJson())
         }
 
         fun send(byte: ByteString) {

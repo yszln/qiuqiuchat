@@ -28,9 +28,9 @@ abstract class BaseVMActivity<VM : RefreshViewModel> : BaseActivity(),
         initViewModel()
         super.onCreate(savedInstanceState)
         loadingDialog = LoadingDialog(this)
+        onClick()
         initRefresh()
         observe()
-        onClick()
         onRefresh()
     }
 
@@ -72,10 +72,6 @@ abstract class BaseVMActivity<VM : RefreshViewModel> : BaseActivity(),
     }
 
 
-    /**
-     * 请求数据
-     */
-    abstract fun refreshData()
 
     override fun showLoading() {
         loadingDialog.show()
@@ -85,16 +81,6 @@ abstract class BaseVMActivity<VM : RefreshViewModel> : BaseActivity(),
         loadingDialog.dismiss()
     }
 
-
-    /**
-     * 点击事件
-     */
-    open fun onClick() {}
-
-    /**
-     * 设置观察者
-     */
-    abstract fun observe()
 
     private fun initViewModel() {
         //取第一个泛型的class

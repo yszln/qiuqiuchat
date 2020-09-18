@@ -23,7 +23,7 @@ class FriendChatAdapter : CommonMultiItemLoadAdapter<TbMessage>() {
 
 
     override fun convert(holder: BaseViewHolder, item: TbMessage) {
-        holder.setText(R.id.item_rv_message_text, item.content)
+        holder.setText(R.id.item_rv_message_text, item.showContent())
 
         when (item.itemType) {
             ChatEnum.ONESELF.value -> {
@@ -35,7 +35,8 @@ class FriendChatAdapter : CommonMultiItemLoadAdapter<TbMessage>() {
         }
 
         holder.getView<View>(R.id.item_rv_message_text).setOnClickListener {
-            MediaUtils.startPlaying(item.content ?: "")
+
+            MediaUtils.startPlaying(item.url)
         }
 
 

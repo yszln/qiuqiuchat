@@ -1,14 +1,11 @@
 package com.yszln.qiuqiu.ui.chat.view
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
-import android.os.Handler
 import android.os.IBinder
-import android.view.MotionEvent
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yszln.lib.activity.BaseVMActivity
@@ -21,26 +18,23 @@ import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.CacheDataBase
 import com.yszln.qiuqiu.db.UserUtils
 import com.yszln.qiuqiu.db.table.TbChat
+import com.yszln.qiuqiu.db.table.TbFriend
 import com.yszln.qiuqiu.db.table.TbMessage
-import com.yszln.qiuqiu.db.table.TbUser
 import com.yszln.qiuqiu.service.WebSocketService
 import com.yszln.qiuqiu.ui.chat.adapter.FriendChatAdapter
 import com.yszln.qiuqiu.ui.chat.model.ChatEnum
-import com.yszln.qiuqiu.ui.chat.model.SendMessageBean
 import com.yszln.qiuqiu.ui.chat.viewmodel.ChatViewModel
 import com.yszln.qiuqiu.utils.Constant
-import com.yszln.qiuqiu.utils.MediaUtils
 import com.yszln.qiuqiu.weiget.VoiceView
 import kotlinx.android.synthetic.main.activity_chat.*
 import java.io.File
-import java.lang.Exception
 
 class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
 
     lateinit var mChantService: WebSocketService.MyBinder
     val mChatConn = ChatConnection()
 
-    var mUser: TbUser? = null
+    var mUser: TbFriend? = null
 
     val mAdapter = FriendChatAdapter()
 
@@ -59,7 +53,7 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
         })
         mViewModel.apply {
             liveFiles.observe(this@FriendChatActivity, Observer {
-                sendMessage(it[0], ChatEnum.MESSAGE_VOICE)
+                sendMessage("", it[0], ChatEnum.MESSAGE_VOICE)
             })
         }
     }
@@ -80,7 +74,7 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
         initData()
         LogUtil.e(CacheDataBase.instance.messageDao().findAll().toJson())
         CacheDataBase.instance.messageDao()
-            .findFriendMessage(mUser?.id, UserUtils.getLoginUser().id).apply {
+            .findFriendMessage(mUser?.id, UserUtils.getLoginUser()?.id).apply {
                 mAdapter.setNewInstance(this)
                 scrollBottom();
             }
@@ -89,19 +83,18 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
 
     private fun initData() {
         intent?.extras?.getString(Constant.JSON)?.apply {
-            mUser = jsonFormat(TbUser::class.java)
+            mUser = jsonFormat(TbFriend::class.java)
         }
         mTitleBar.setTitle(mUser?.username)
 
     }
 
-    @SuppressLint("ClickableViewAccessibility")
     override fun onClick() {
         chatSend.setOnClickListener {
             val text = chatInput.textStr()
             if (text.isEmpty()) return@setOnClickListener
             chatInput.setText("")
-            sendMessage(text, ChatEnum.MESSAGE_TEXT)
+            sendMessage(text,"", ChatEnum.MESSAGE_TEXT)
         }
 
         /*  chatVoice.onMediaListener = object : VoiceView.OnMediaListener {
@@ -118,12 +111,12 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
         }
     }
 
-    private fun sendMessage(text: String, chatEnum: ChatEnum) {
-        mChantService.send(mUser?.id, text, chatEnum.value)
+    private fun sendMessage(content: String, url: String, chatEnum: ChatEnum) {
+        mChantService.send(mUser?.id, content, url, chatEnum.value)
         val tbMessage = TbMessage(
             null,
-            text,
-            "",
+            content,
+            url,
             chatEnum.value,
             mUser?.id!!,
             mUser?.username ?: "",

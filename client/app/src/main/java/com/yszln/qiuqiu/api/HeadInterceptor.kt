@@ -1,6 +1,6 @@
-package com.yszln.lib.network
+package com.yszln.qiuqiu.api
 
-import com.yszln.lib.utils.SPUtils
+import com.yszln.qiuqiu.db.UserUtils
 import okhttp3.Interceptor
 import okhttp3.Response
 
@@ -12,12 +12,10 @@ class HeadInterceptor : Interceptor {
             chain
                 .request()
                 .newBuilder()
-                .header("token", getToken())
+                .header("token", UserUtils.getToken())
                 .build()
         )
     }
 
-    fun getToken(): String {
-        return SPUtils.get("TOKEN") ?: ""
-    }
+
 }

@@ -11,18 +11,23 @@ class VoiceView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : AppCompatImageView(context, attrs, defStyleAttr) {
 
+    init {
+        isLongClickable=true
+    }
+
+    var start = ""
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
         LogUtil.e("event:${event.action}")
-        var start = ""
+
         when (event.action) {
             MotionEvent.ACTION_DOWN -> {
                 start = MediaUtils.startRecord()
-                postDelayed({ MediaUtils.stopRecord()
-                    onMediaListener?.onEnd(start)},3000)
+                LogUtil.e("event down :${event.action},url:${start}")
             }
             MotionEvent.ACTION_UP -> {
                 MediaUtils.stopRecord()
+                LogUtil.e("event up :${event.action},url:${start}")
                 onMediaListener?.onEnd(start)
             }
         }

@@ -15,11 +15,13 @@ import com.yszln.qiuqiu.utils.Constant
 object UserUtils {
 
     fun isLogin(): Boolean {
-        return null != getLoginUser() && !TextUtils.isEmpty(getToken())
+        return null != getLoginUser()
     }
 
     fun getLoginUser(): TbUser {
-        return CacheDataBase.instance.userDao().findFirst();
+        val findFirst = CacheDataBase.instance.userDao().findFirst()
+
+        return findFirst;
     }
 
     fun checkLogin(): Boolean {
@@ -32,16 +34,16 @@ object UserUtils {
         }
     }
 
-    fun login(user: LoginBean) {
+    fun login(loginer: LoginBean) {
         CacheDataBase.instance.userDao().deleteAll()
-        CacheDataBase.instance.userDao().insert(user.member)
-        setToken(user.token)
+        loginer.member.token=loginer.token
+        CacheDataBase.instance.userDao().insert(loginer.member)
+
     }
 
     fun loginOut() {
 
         CacheDataBase.instance.userDao().deleteAll()
-        setToken("")
         start(LoginActivity::class.java)
         //停止消息推送服务
         AppManageHelper.currentActivity().apply {
@@ -51,10 +53,8 @@ object UserUtils {
     }
 
     fun getToken(): String {
-        return SPUtils.get(Constant.TOKEN) ?: ""
+        return getLoginUser()?.token?:""
     }
 
-    fun setToken(token: String) {
-        SPUtils.put(Constant.TOKEN, token)
-    }
+
 }

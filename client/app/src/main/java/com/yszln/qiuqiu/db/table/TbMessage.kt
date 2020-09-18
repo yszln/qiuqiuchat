@@ -3,6 +3,7 @@ package com.yszln.qiuqiu.db.table
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import com.chad.library.adapter.base.entity.MultiItemEntity
+import com.yszln.qiuqiu.ui.chat.model.ChatEnum
 
 @Entity(tableName = "tb_message")
 data class TbMessage(
@@ -19,4 +20,24 @@ data class TbMessage(
     var sourceAvatar: String,
     var time: Long,//创建时间
     override var itemType: Int
-) : MultiItemEntity{}
+) : MultiItemEntity {
+    fun showContent() = when (type) {
+        ChatEnum.MESSAGE_TEXT.value -> {
+            content
+        }
+        ChatEnum.MESSAGE_VOICE.value -> {
+            "语音消息"
+        }ChatEnum.MESSAGE_VIDEO.value -> {
+            "视频消息"
+        }
+        ChatEnum.MESSAGE_IMAGE.value -> {
+            "图片消息"
+        }
+        ChatEnum.MESSAGE_VIDEO.value -> {
+            "视频消息"
+        }
+        else -> {
+            "请升级到最新版查看"
+        }
+    }
+}

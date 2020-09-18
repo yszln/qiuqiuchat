@@ -23,11 +23,11 @@ abstract class BaseLoadMoreActivity<VM : LoadMoreViewModel> : BaseVMActivity<VM>
 
     override fun onRefresh() {
         super.onRefresh()
-        loadMore().clearData()
+        loadMore()?.clearData()
     }
 
     private fun initLoadMore() {
-        loadMore().getLoadModule().setOnLoadMoreListener {
+        loadMore()?.getLoadModule()?.setOnLoadMoreListener {
             loadMoreData()
         }
         mViewModel.mLoadMoreStatus.observe(this, Observer {
@@ -47,7 +47,7 @@ abstract class BaseLoadMoreActivity<VM : LoadMoreViewModel> : BaseVMActivity<VM>
     /**
      * 加载更多的适配器
      */
-    abstract fun loadMore(): LoadMore
+    abstract fun loadMore(): LoadMore?
 
 
     /**

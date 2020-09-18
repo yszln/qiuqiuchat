@@ -62,7 +62,7 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/stroke_corner_search_shape"
           >
-<!--  app:layout_behavior=".header_float_behavior"-->
+<!--  app:layout_behavior="@string/header_float_behavior"-->
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
@@ -79,6 +79,6 @@
         android:layout_height="match_parent"
         android:background="#fff"
         app:layoutManager="LinearLayoutManager"
+        app:layout_behavior="@string/header_scrolling_behavior"
      />
-<!--   app:layout_behavior="@string/header_scrolling_behavior" -->
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
