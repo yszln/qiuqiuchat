@@ -6,6 +6,7 @@ import android.os.Binder
 import android.os.Handler
 import android.os.Looper
 import android.os.Message
+import androidx.lifecycle.MutableLiveData
 import com.neovisionaries.ws.client.*
 import com.yszln.lib.bean.BaseBean
 import com.yszln.lib.bus.LiveDataBus
@@ -40,10 +41,12 @@ class WebSocketService : Service() {
 
     private val MESSAGE_HEART = 0x001
 
-    /**
-     * 连接状态
-     */
-    private var isConn = false;
+    companion object {
+        /**
+         * 连接状态
+         */
+        val isConn = MutableLiveData<Boolean>();
+    }
 
 
     override fun onCreate() {
@@ -64,7 +67,7 @@ class WebSocketService : Service() {
 
     }
 
-    override fun onBind(intent: Intent?) = MyBinder()
+    override fun onBind(intent: Intent) = MyBinder()
 
 
     inner class MyHandler : Handler(Looper.getMainLooper()) {
@@ -86,7 +89,7 @@ class WebSocketService : Service() {
      * 心跳检测
      */
     private fun heartBeatRate() {
-        if (isConn) {
+        if (isConn.value!!) {
             //连接正常，进行心跳检测
             val send = mSocket.sendText("")
             LogUtil.e("SocketListener", "heartBeatRate:${send.isOpen}")
@@ -170,21 +173,21 @@ class WebSocketService : Service() {
 
     private fun setChat(tbMessage: TbMessage) {
         tbMessage.apply {
-            val findByFriend = CacheDataBase.instance.chatDao().findByFriend(sourceId)
+            val findByFriend = CacheDataBase.instance.chatDao().findByFriend(receiveId)
             if (findByFriend.size < 1) {
                 val tbChat = TbChat(
                     null,
                     content,
-                    sourceId,
-                    sourceName,
-                    sourceAvatar,
+                    receiveId,
+                    receiveName,
+                    receiveAvatar,
                     System.currentTimeMillis() / 1000
                 )
                 CacheDataBase.instance.chatDao().insert(tbChat)
             } else {
                 findByFriend[0].content = content
                 findByFriend[0].time = System.currentTimeMillis() / 1000
-                CacheDataBase.instance.chatDao().deleteByFriend(sourceId)
+                CacheDataBase.instance.chatDao().deleteByFriend(receiveId)
                 CacheDataBase.instance.chatDao().update(findByFriend[0])
             }
         }
@@ -197,7 +200,7 @@ class WebSocketService : Service() {
      */
     private fun connectionSuccess(webSocket: WebSocket) {
         mSocket = webSocket
-        isConn = true
+        isConn.postValue( true)
         //启动心跳检测
         mHandler.removeCallbacksAndMessages(null)
         heartBeatRate()
@@ -207,7 +210,7 @@ class WebSocketService : Service() {
      * 连接断开
      */
     private fun disConnection() {
-        isConn = false
+        isConn.postValue( false)
         mHandler.removeCallbacksAndMessages(null)
         heartBeatRate();
     }
@@ -217,8 +220,8 @@ class WebSocketService : Service() {
      * 暴露方法
      */
     inner class MyBinder : Binder() {
-        fun send(receiverId: Long?, content: String,url:String, type: Int) {
-            mSocket.sendText(SendMessageBean(receiverId, content,url, type).toJson())
+        fun send(receiverId: Long?, content: String, url: String, type: Int) {
+            mSocket.sendText(SendMessageBean(receiverId, content, url, type).toJson())
         }
 
         fun send(byte: ByteString) {
