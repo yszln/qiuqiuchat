@@ -18,12 +18,9 @@ import com.yszln.qiuqiu.R;
  */
 public class HeaderSearchBehavior extends CoordinatorLayout.Behavior<View> {
 
-//    private ArgbEvaluator argbEvaluator;
 
     public HeaderSearchBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
-
-//        argbEvaluator = new ArgbEvaluator();
     }
 
     @Override
@@ -45,17 +42,7 @@ public class HeaderSearchBehavior extends CoordinatorLayout.Behavior<View> {
             final float child_height = child.getHeight();
             final float child_height_end = (header_height - child_height) / 2 - (header_height + offset_y);
             child.setTranslationY(header_height + resources.getDimension(R.dimen.collapsed_float_offset_y));
-//        }
-            // Background
-//        child.setBackgroundColor((int) argbEvaluator.evaluate(
-//                progress,
-//                resources.getColor(R.color.colorCollapsedFloatBackground),
-//                resources.getColor(R.color.colorInitFloatBackground)));
 
-//        dependentViewRL.get().setBackgroundColor((int) argbEvaluator.evaluate(
-//                progress,
-//                resources.getColor(R.color.colorCollapsedFloatBackground),
-//                resources.getColor(R.color.colorInitFloatBackground)));
 
             // Margins
             final float collapsedMargin = resources.getDimension(R.dimen.collapsed_search_margin_right);

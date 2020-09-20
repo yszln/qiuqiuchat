@@ -2,6 +2,7 @@ package com.yszln.qiuqiu.ui.main.view
 
 import com.yszln.lib.fragment.BaseVMFragment
 import com.yszln.lib.utils.LogUtil
+import com.yszln.lib.utils.StatusBarUtil
 import com.yszln.lib.utils.toJson
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.CacheDataBase
@@ -16,7 +17,9 @@ class HomeFragment : BaseVMFragment<HomeViewModel>() {
     override fun refreshData() {
         CacheDataBase.instance.chatDao().findAll().apply {
             LogUtil.e(toJson())
-            mAdapter.setList(this)
+            for(i in 0..10){
+                mAdapter.addData(this)
+            }
         }
     }
 

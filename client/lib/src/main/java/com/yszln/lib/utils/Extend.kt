@@ -67,3 +67,6 @@ fun ImageView.load(url: Any) {
 fun ImageView.load(url: Any, roundedCorners: Int) {
     ImageLoader.load(this, url, roundedCorners)
 }
+
+fun Int.px() = ScreenUtil.dpToPx(this)
+fun Float.px() = ScreenUtil.dpToPx(this)

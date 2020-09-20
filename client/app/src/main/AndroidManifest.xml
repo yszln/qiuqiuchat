@@ -42,8 +42,7 @@
 
         <activity android:name=".ui.main.view.MainActivity"></activity>
         <activity
-            android:name=".ui.chat.view.FriendChatActivity"
-            android:windowSoftInputMode="adjustPan" />
+            android:name=".ui.chat.view.FriendChatActivity" android:windowSoftInputMode="adjustResize" />
     </application>
 
 </manifest>

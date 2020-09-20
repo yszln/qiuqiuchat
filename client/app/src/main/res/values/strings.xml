@@ -18,7 +18,7 @@
     <string name="chat">聊天</string>
     <string name="my">我的</string>
 
-    <string name="header_search_behavior">com.yszln.qiuqiu.ui.mian.view.behavior.HeaderSearchBehavior</string>
+    <string name="header_search_behavior">com.yszln.qiuqiu.ui.main.view.behavior.HeaderSearchBehavior</string>
     <string name="header_scrolling_behavior">com.yszln.qiuqiu.ui.main.view.behavior.HeaderScrollingBehavior</string>
     <string name="header_logo_behavior">com.yszln.qiuqiu.ui.main.view.behavior.HeaderLogoBehavior</string>
     <string name="linkman">联系人</string>

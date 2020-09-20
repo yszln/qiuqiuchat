@@ -1,19 +1,21 @@
 package com.yszln.qiuqiu.ui.chat.view
 
-import android.annotation.SuppressLint
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.ServiceConnection
 import android.os.IBinder
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import cn.dreamtobe.kpswitch.util.KPSwitchConflictUtil
+import cn.dreamtobe.kpswitch.util.KPSwitchConflictUtil.SubPanelAndTrigger
+import cn.dreamtobe.kpswitch.util.KeyboardUtil
 import com.yszln.lib.activity.BaseVMActivity
 import com.yszln.lib.bus.LiveDataBus
-import com.yszln.lib.utils.LogUtil
 import com.yszln.lib.utils.jsonFormat
 import com.yszln.lib.utils.textStr
-import com.yszln.lib.utils.toJson
+import com.yszln.lib.utils.toast
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.CacheDataBase
 import com.yszln.qiuqiu.db.UserUtils
@@ -56,6 +58,8 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
                 sendMessage("", it[0], ChatEnum.MESSAGE_VOICE)
             })
         }
+
+
     }
 
     private fun scrollBottom() {
@@ -72,15 +76,35 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = LinearLayoutManager(this)
         initData()
-        LogUtil.e(CacheDataBase.instance.messageDao().findAll().toJson())
         CacheDataBase.instance.messageDao()
             .findFriendMessage(mUser?.id, UserUtils.getLoginUser()?.id).apply {
                 mAdapter.setNewInstance(this)
                 scrollBottom();
             }
         bindService(Intent(this, WebSocketService::class.java), mChatConn, Context.BIND_AUTO_CREATE)
+
+        KeyboardUtil.attach(
+            this,
+            panelFrameLayout,
+            object : KeyboardUtil.OnKeyboardShowingListener {
+                override fun onKeyboardShowing(isShowing: Boolean) {
+                    panelFrameLayout.visibility=if(isShowing) View.VISIBLE else View.GONE
+                }
+            });
+
+       /* KPSwitchConflictUtil.attach(
+            panelFrameLayout, chatInput,object :KPSwitchConflictUtil.SwitchClickListener{
+                override fun onClickSwitch(v: View?, switchToPanel: Boolean) {
+                    switchToPanel.toString().toast()
+                }
+            }
+        )*/
     }
 
+    override fun onPause() {
+        super.onPause()
+//        panelFrameLayout.recordKeyboardStatus(window)
+    }
     private fun initData() {
         intent?.extras?.getString(Constant.JSON)?.apply {
             mUser = jsonFormat(TbFriend::class.java)
@@ -94,14 +118,8 @@ class FriendChatActivity : BaseVMActivity<ChatViewModel>() {
             val text = chatInput.textStr()
             if (text.isEmpty()) return@setOnClickListener
             chatInput.setText("")
-            sendMessage(text,"", ChatEnum.MESSAGE_TEXT)
+            sendMessage(text, "", ChatEnum.MESSAGE_TEXT)
         }
-
-        /*  chatVoice.onMediaListener = object : VoiceView.OnMediaListener {
-              override fun onEnd(file: File?) {
-                  LogUtil.e("录音路径：${file?.absolutePath}")
-              }
-          }*/
 
         chatVoice.onMediaListener = object : VoiceView.OnMediaListener {
             override fun onEnd(filePath: String) {

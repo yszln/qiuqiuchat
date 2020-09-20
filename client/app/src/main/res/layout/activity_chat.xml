@@ -9,39 +9,48 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
-   <LinearLayout
-       android:layout_width="match_parent"
-       android:orientation="vertical"
-       android:layout_height="match_parent">
-       <androidx.recyclerview.widget.RecyclerView
-           android:id="@+id/mRecyclerView"
-           android:layout_width="match_parent"
-           android:layout_height="0dp"
-           android:layout_weight="1" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:orientation="horizontal">
-           <com.yszln.qiuqiu.weiget.VoiceView
-               android:id="@+id/chatVoice"
-               android:layout_width="@dimen/_45dp"
-               android:padding="@dimen/_8dp"
-               android:src="@drawable/ic_voice"
-               android:layout_gravity="center_vertical"
-               android:layout_height="match_parent"/>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/mRecyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
 
-           <EditText
-               android:id="@+id/chatInput"
-               android:layout_width="0dp"
-               android:layout_height="wrap_content"
-               android:layout_weight="1" />
+        <LinearLayout
+            android:id="@+id/chatBottomLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
 
-           <Button
-               android:id="@+id/chatSend"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="发送" />
-       </LinearLayout>
-   </LinearLayout>
+            <com.yszln.qiuqiu.weiget.VoiceView
+                android:id="@+id/chatVoice"
+                android:layout_width="@dimen/_45dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:padding="@dimen/_8dp"
+                android:src="@drawable/ic_voice" />
+
+            <EditText
+                android:id="@+id/chatInput"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" />
+
+            <Button
+                android:id="@+id/chatSend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="发送" />
+        </LinearLayout>
+
+        <cn.dreamtobe.kpswitch.widget.KPSwitchFSPanelFrameLayout
+            android:id="@+id/panelFrameLayout"
+            android:layout_width="match_parent"
+            android:visibility="gone"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </LinearLayout>
