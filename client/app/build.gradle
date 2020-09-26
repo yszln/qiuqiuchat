@@ -20,6 +20,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
         javaCompileOptions {
             annotationProcessorOptions {
                 arguments += [
@@ -46,6 +47,8 @@ dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar","*.aar"])
 
     api project(path: ':lib')
+    implementation 'androidx.appcompat:appcompat:1.2.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.1'
 
     def room_version = "2.2.5"
     implementation "androidx.room:room-runtime:$room_version"

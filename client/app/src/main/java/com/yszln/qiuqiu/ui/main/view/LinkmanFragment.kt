@@ -1,5 +1,6 @@
 package com.yszln.qiuqiu.ui.main.view
 
+import android.view.View
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.yszln.lib.fragment.BaseVMFragment
@@ -17,6 +18,7 @@ class LinkmanFragment : BaseVMFragment<LinkmanViewModel>() {
     }
 
     override fun initView() {
+        searchBarView.titleBlack.visibility=View.GONE
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = LinearLayoutManager(context);
     }

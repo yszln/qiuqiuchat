@@ -5,6 +5,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import com.yszln.lib.R
+import kotlinx.android.synthetic.main.layout_empty.view.*
 
 /**
  * 空布局

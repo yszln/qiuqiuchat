@@ -15,13 +15,16 @@ class SearchBarView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
+    val titleBlack:View
+
     fun setHint(title: String?) {
         titleSearch.hint = title
     }
 
     init {
-        View.inflate(context, R.layout.view_title_search, this)
 
+        View.inflate(context, R.layout.view_title_search, this)
+        this.titleBlack=findViewById(R.id.titleBlack)
         titleBlack.setOnClickListener {
             if (context is Activity) {
                 context.onBackPressed()

@@ -1,15 +1,15 @@
 package com.yszln.lib.app
 
 import android.app.Activity
-import android.app.Application
 import android.os.Bundle
+import androidx.multidex.BuildConfig
+import androidx.multidex.MultiDexApplication
 import com.chad.library.adapter.base.module.LoadMoreModuleConfig
-import com.yszln.lib.BuildConfig
 import com.yszln.lib.widget.CustomLoadMoreView
 import kotlin.properties.Delegates
 
 
-abstract class BaseApplication : Application(){
+abstract class BaseApplication : MultiDexApplication(){
 
 
     companion object {
