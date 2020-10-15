@@ -1,58 +1,52 @@
-package com.yszln.qiuqiu.ui.main.view.behavior;
+package com.yszln.qiuqiu.ui.main.view.behavior
 
-import android.content.Context;
-import android.util.AttributeSet;
-import android.view.View;
-
-import androidx.annotation.NonNull;
-import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.view.ViewCompat;
-import androidx.recyclerview.widget.RecyclerView;
-
-
-import com.yszln.qiuqiu.R;
-
-import java.lang.ref.WeakReference;
-
-/**
- * @author LiBinBin 
- * @create 2020/7/29
- * @Describe  
- */
-public class HeaderScrollingBehavior extends CoordinatorLayout.Behavior<RecyclerView> {
-
-    private WeakReference<View> dependentView;
-
-    public HeaderScrollingBehavior(Context context, AttributeSet attrs) {
-        super(context, attrs);
-    }
+import android.content.Context
+import android.util.AttributeSet
+import android.view.View
+import androidx.coordinatorlayout.widget.CoordinatorLayout
+import androidx.core.view.ViewCompat
+import androidx.recyclerview.widget.RecyclerView
+import com.yszln.qiuqiu.R
+import java.lang.ref.WeakReference
 
 
-    @Override
-    public boolean layoutDependsOn(CoordinatorLayout parent, RecyclerView child, View dependency) {
-        if (dependency != null && dependency.getId() == R.id.image) {
-            if(dependentView==null){
-                dependentView = new WeakReference<>(dependency);
+class HeaderScrollingBehavior(context: Context?, attrs: AttributeSet?) :
+    CoordinatorLayout.Behavior<RecyclerView>(context, attrs) {
+    private var dependentView: WeakReference<View>? = null
+    override fun layoutDependsOn(
+        parent: CoordinatorLayout,
+        child: RecyclerView,
+        dependency: View
+    ): Boolean {
+        if (dependency != null && dependency.id == R.id.image) {
+            if (dependentView == null) {
+                dependentView = WeakReference(dependency)
             }
-            return true;
+            return true
         }
-        return false;
+        return false
     }
 
-    @Override
-    public boolean onLayoutChild(CoordinatorLayout parent, RecyclerView child, int layoutDirection) {
-        CoordinatorLayout.LayoutParams lp = (CoordinatorLayout.LayoutParams) child.getLayoutParams();
+    override fun onLayoutChild(
+        parent: CoordinatorLayout,
+        child: RecyclerView,
+        layoutDirection: Int
+    ): Boolean {
+        val lp = child.layoutParams as CoordinatorLayout.LayoutParams
         if (lp.height == CoordinatorLayout.LayoutParams.MATCH_PARENT) {
-            child.layout(0, 0, parent.getWidth(), (int) (parent.getHeight() - getDependentViewCollapsedHeight()));
-            return true;
+            child.layout(0, 0, parent.width, (parent.height - dependentViewCollapsedHeight).toInt())
+            return true
         }
-        return super.onLayoutChild(parent, child, layoutDirection);
+        return super.onLayoutChild(parent, child, layoutDirection)
     }
 
-    @Override
-    public boolean onDependentViewChanged(CoordinatorLayout parent, RecyclerView child, View dependency) {
-        child.setTranslationY(dependency.getHeight() + dependency.getTranslationY());
-        return true;
+    override fun onDependentViewChanged(
+        parent: CoordinatorLayout,
+        child: RecyclerView,
+        dependency: View
+    ): Boolean {
+        child.translationY = dependency.height + dependency.translationY
+        return true
     }
 
     /**
@@ -68,10 +62,15 @@ public class HeaderScrollingBehavior extends CoordinatorLayout.Behavior<Recycler
      * @param type
      * @return
      */
-    @Override
-    public boolean onStartNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull RecyclerView child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
-        return (axes & ViewCompat.SCROLL_AXIS_VERTICAL) != 0;
-
+    override fun onStartNestedScroll(
+        coordinatorLayout: CoordinatorLayout,
+        child: RecyclerView,
+        directTargetChild: View,
+        target: View,
+        axes: Int,
+        type: Int
+    ): Boolean {
+        return axes and ViewCompat.SCROLL_AXIS_VERTICAL != 0
     }
 
     /**
@@ -84,9 +83,22 @@ public class HeaderScrollingBehavior extends CoordinatorLayout.Behavior<Recycler
      * @param axes
      * @param type
      */
-    @Override
-    public void onNestedScrollAccepted(@NonNull CoordinatorLayout coordinatorLayout, @NonNull RecyclerView child, @NonNull View directTargetChild, @NonNull View target, int axes, int type) {
-        super.onNestedScrollAccepted(coordinatorLayout, child, directTargetChild, target, axes, type);
+    override fun onNestedScrollAccepted(
+        coordinatorLayout: CoordinatorLayout,
+        child: RecyclerView,
+        directTargetChild: View,
+        target: View,
+        axes: Int,
+        type: Int
+    ) {
+        super.onNestedScrollAccepted(
+            coordinatorLayout,
+            child,
+            directTargetChild,
+            target,
+            axes,
+            type
+        )
     }
 
     /**
@@ -102,21 +114,26 @@ public class HeaderScrollingBehavior extends CoordinatorLayout.Behavior<Recycler
      * @param consumed
      * @param type
      */
-    @Override
-    public void onNestedPreScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull RecyclerView child, @NonNull View target, int dx, int dy, @NonNull int[] consumed, int type) {
+    override fun onNestedPreScroll(
+        coordinatorLayout: CoordinatorLayout,
+        child: RecyclerView,
+        target: View,
+        dx: Int,
+        dy: Int,
+        consumed: IntArray,
+        type: Int
+    ) {
         if (dy < 0) {
-            return;
+            return
         }
-        View dependentView = getDependentView();
-        float newTranslateY = dependentView.getTranslationY() - dy;
-        float minHeaderTranslate = -(dependentView.getHeight() - getDependentViewCollapsedHeight());
-
-
+        val dependentView = getDependentView()
+        val newTranslateY = dependentView!!.translationY - dy
+        val minHeaderTranslate = -(dependentView.height - dependentViewCollapsedHeight)
         if (newTranslateY > minHeaderTranslate) {
-            dependentView.setTranslationY(newTranslateY);
-            consumed[1] = dy;
-        }else{
-            dependentView.setTranslationY(minHeaderTranslate);
+            dependentView.translationY = newTranslateY
+            consumed[1] = dy
+        } else {
+            dependentView.translationY = minHeaderTranslate
         }
     }
 
@@ -134,19 +151,26 @@ public class HeaderScrollingBehavior extends CoordinatorLayout.Behavior<Recycler
      * @param dyUnconsumed
      * @param type
      */
-    @Override
-    public void onNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull RecyclerView child, @NonNull View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed, int type) {
+    override fun onNestedScroll(
+        coordinatorLayout: CoordinatorLayout,
+        child: RecyclerView,
+        target: View,
+        dxConsumed: Int,
+        dyConsumed: Int,
+        dxUnconsumed: Int,
+        dyUnconsumed: Int,
+        type: Int
+    ) {
         if (dyUnconsumed > 0) {
-            return;
+            return
         }
-        View dependentView = getDependentView();
-        float newTranslateY = dependentView.getTranslationY() - dyUnconsumed;
-        final float maxHeaderTranslate = 0;
-
+        val dependentView = getDependentView()
+        val newTranslateY = dependentView!!.translationY - dyUnconsumed
+        val maxHeaderTranslate = 0f
         if (newTranslateY < maxHeaderTranslate) {
-            dependentView.setTranslationY(newTranslateY);
-        }else{
-            dependentView.setTranslationY(maxHeaderTranslate);
+            dependentView.translationY = newTranslateY
+        } else {
+            dependentView.translationY = maxHeaderTranslate
         }
     }
 
@@ -154,7 +178,7 @@ public class HeaderScrollingBehavior extends CoordinatorLayout.Behavior<Recycler
      * 用户松开手指并且会发生惯性滚动之前调用。参数提供了速度信息，我们这里可以根据速度，
      * 决定最终的状态是展开还是折叠，并且启动滑动动画。通过返回值我们可以通知 NestedScrollChild 是否自己还要进行滑动滚动，
      * 一般情况如果面板处于中间态，我们就不让 NestedScrollChild 接着滚了，因为我们还要用动画把面板完全展开或者完全折叠。
-     *  此处返回false，不拦截RecyclerView的惯性滚动
+     * 此处返回false，不拦截RecyclerView的惯性滚动
      * @param coordinatorLayout
      * @param child
      * @param target
@@ -162,9 +186,14 @@ public class HeaderScrollingBehavior extends CoordinatorLayout.Behavior<Recycler
      * @param velocityY
      * @return
      */
-    @Override
-    public boolean onNestedPreFling(CoordinatorLayout coordinatorLayout, RecyclerView child, View target, float velocityX, float velocityY) {
-        return false;
+    override fun onNestedPreFling(
+        coordinatorLayout: CoordinatorLayout,
+        child: RecyclerView,
+        target: View,
+        velocityX: Float,
+        velocityY: Float
+    ): Boolean {
+        return false
     }
 
     /**
@@ -175,17 +204,18 @@ public class HeaderScrollingBehavior extends CoordinatorLayout.Behavior<Recycler
      * @param target
      * @param type
      */
-    @Override
-    public void onStopNestedScroll(@NonNull CoordinatorLayout coordinatorLayout, @NonNull RecyclerView child, @NonNull View target, int type) {
+    override fun onStopNestedScroll(
+        coordinatorLayout: CoordinatorLayout,
+        child: RecyclerView,
+        target: View,
+        type: Int
+    ) {
     }
 
+    private val dependentViewCollapsedHeight: Float
+        private get() = getDependentView()!!.resources.getDimension(R.dimen.collapsed_header_height)
 
-    private float getDependentViewCollapsedHeight() {
-        return getDependentView().getResources().getDimension(R.dimen.collapsed_header_height);
+    private fun getDependentView(): View? {
+        return dependentView!!.get()
     }
-
-    private View getDependentView() {
-        return dependentView.get();
-    }
-
 }
