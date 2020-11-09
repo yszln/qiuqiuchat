@@ -1,21 +1,28 @@
 package com.yszln.qiuqiu.ui.search.view
 
-import com.yszln.lib.activity.BaseVMActivity
+import android.os.Bundle
+import android.view.View
+import com.yszln.lib.activity.BaseActivity
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.ui.search.viewmodel.SearchViewModel
 
 
-class SearchActivity : BaseVMActivity<SearchViewModel>() {
+class SearchActivity : BaseActivity<SearchViewModel>() {
 
     override fun layoutId()=R.layout.activity_search
-
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
     }
 
-    override fun observe() {
+    override fun onClick(v: View?) {
+    }
+
+
+    override fun observer() {
     }
 
     override fun refreshData() {
+
     }
+
 
 }

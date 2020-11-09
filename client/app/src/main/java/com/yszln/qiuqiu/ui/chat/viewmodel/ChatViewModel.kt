@@ -1,7 +1,7 @@
 package com.yszln.qiuqiu.ui.chat.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.yszln.lib.viewmodel.LoadMoreViewModel
+import com.yszln.lib.viewmodel.BaseViewModel
 import com.yszln.qiuqiu.api.Api
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.MultipartBody
@@ -10,7 +10,7 @@ import okhttp3.RequestBody.Companion.asRequestBody
 import java.io.File
 
 
-class ChatViewModel : LoadMoreViewModel() {
+class ChatViewModel : BaseViewModel() {
     val liveFiles = MutableLiveData<MutableList<String>>()
 
     fun upload(files: MutableList<File>) {

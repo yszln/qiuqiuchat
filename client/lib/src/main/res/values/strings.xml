@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="loading_data_empty_content">暂无数据</string>
+    <string name="loading_data_content">正在玩命加载…</string>
+    <string name="loading_data_network_error">哎呀 …网络似乎有点问题</string>
+    <string name="web_loading_error">哎呀 …加载失败了</string>
+    <string name="web_loading_error_retry">点击屏幕重试</string>
+    <string name="loading_data_network_error_check">请检查下网络…</string>
+    <string name="retry">重试</string>
+</resources>

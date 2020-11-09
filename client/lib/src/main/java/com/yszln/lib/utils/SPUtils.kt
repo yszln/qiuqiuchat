@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.yszln.lib.app.BaseApplication
 
 object SPUtils {
-    private const val spName = "wanAndroidCache"
+    private const val spName = "SPCache"
 
     val mSp: SharedPreferences =
         BaseApplication.instance.getSharedPreferences(spName, Context.MODE_PRIVATE)

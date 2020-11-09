@@ -1,12 +1,12 @@
 package com.yszln.qiuqiu.ui.main.viewmodel
 
 import androidx.lifecycle.MutableLiveData
-import com.yszln.lib.viewmodel.RefreshViewModel
+import com.yszln.lib.viewmodel.BaseViewModel
 import com.yszln.qiuqiu.api.Api
 import com.yszln.qiuqiu.db.CacheDataBase
 import com.yszln.qiuqiu.db.table.TbFriend
 
-class LinkmanViewModel : RefreshViewModel() {
+class LinkmanViewModel : BaseViewModel() {
 
     val mFriends = MutableLiveData<MutableList<TbFriend>>()
 

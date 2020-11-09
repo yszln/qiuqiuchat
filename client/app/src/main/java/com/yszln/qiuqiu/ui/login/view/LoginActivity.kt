@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
-import com.yszln.lib.activity.BaseVMActivity
+import com.yszln.lib.activity.BaseActivity
 import com.yszln.lib.utils.start
 import com.yszln.lib.utils.textStr
 import com.yszln.lib.utils.toast
@@ -19,22 +19,43 @@ import kotlinx.android.synthetic.main.activity_login.*
 /**
  * 登陆
  */
-class LoginActivity : BaseVMActivity<LoginViewModel>() {
+class LoginActivity : BaseActivity<LoginViewModel>() {
 
     var loginType = 0;
-
-    override fun refreshData() {
-    }
 
 
     override fun layoutId() = R.layout.activity_login
 
-    override fun initView() {
+
+    override fun initView(savedInstanceState: Bundle?) {
         loginType = intent?.extras?.getInt(Constant.LOGIN_TYPE) ?: 0;
         setLayoutWithType()
     }
 
-    override fun observe() {
+
+    override fun onClick(v: View?) {
+        when (v?.id) {
+            loginClose.id -> {
+                finish()
+            }
+            loginBtn.id -> {
+                submitData()
+            }
+            loginForgetPassword.id -> {
+                start<LoginActivity>(
+                    Constant.LOGIN_TYPE to 2
+                )
+            }
+            loginRegister.id -> {
+                finish()
+                start<LoginActivity>(
+                    Constant.LOGIN_TYPE to 1
+                )
+            }
+        }
+    }
+
+    override fun observer() {
         mViewModel.apply {
             loginUser.observe(this@LoginActivity, Observer {
                 //缓存
@@ -44,6 +65,11 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
             })
         }
     }
+
+    override fun refreshData() {
+
+    }
+
 
     private fun setLayoutWithType() {
         when (loginType) {
@@ -94,25 +120,17 @@ class LoginActivity : BaseVMActivity<LoginViewModel>() {
         })
     }
 
-
-    override fun onClick() {
-        loginClose.setOnClickListener {
-            finish()
-        }
-        loginBtn.setOnClickListener {
-            submitData()
-        }
-        loginForgetPassword.setOnClickListener {
-            start(LoginActivity::class.java,
-                Bundle().apply { putInt(Constant.LOGIN_TYPE, 2) })
-        }
-        loginRegister.setOnClickListener {
-            start(LoginActivity::class.java,
-                Bundle().apply { putInt(Constant.LOGIN_TYPE, 1) })
-        }
-        loginFreeze.setOnClickListener { }
-        loginSecurityCenter.setOnClickListener { }
+    override fun registerClick(): MutableList<View> {
+        return mutableListOf(
+            loginClose,
+            loginBtn,
+            loginForgetPassword,
+            loginRegister,
+            loginFreeze,
+            loginSecurityCenter
+        )
     }
+
 
     private fun submitData() {
         when (loginType) {

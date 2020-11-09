@@ -1,19 +1,20 @@
 package com.yszln.qiuqiu.ui.splash
 
 import android.Manifest
+import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
-import com.yszln.lib.activity.BaseActivity
+import android.view.View
+import com.yszln.lib.activity.SuperActivity
 import com.yszln.lib.utils.start
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.UserUtils
 import com.yszln.qiuqiu.ui.login.view.LoginActivity
 import com.yszln.qiuqiu.ui.main.view.MainActivity
 
-class SplashActivity : BaseActivity() {
+class SplashActivity : SuperActivity() {
     override fun layoutId() = R.layout.activity_splash
-
-    override fun initView() {
+    override fun initView(savedInstanceState: Bundle?) {
         window.setBackgroundDrawableResource(R.color.white)
         Handler(Looper.getMainLooper()).postDelayed({
 
@@ -29,6 +30,11 @@ class SplashActivity : BaseActivity() {
         },2000)
 
     }
+
+    override fun onClick(v: View?) {
+
+    }
+
 
     override fun onRequestPermissionsResult(
         requestCode: Int,

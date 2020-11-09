@@ -19,13 +19,10 @@ abstract class CommonAdapter<T>(layoutResId: Int) :
 
 
     private fun checkData() {
-        if (data == null || data.isEmpty()) {
+        if (data.isEmpty()) {
             setEmptyView(EmptyView(context))
         }
     }
 
-    fun clearData() {
-        setList(null)
-    }
 
 }

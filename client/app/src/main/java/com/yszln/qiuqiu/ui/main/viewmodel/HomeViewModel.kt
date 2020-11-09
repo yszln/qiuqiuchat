@@ -1,5 +1,5 @@
 package com.yszln.qiuqiu.ui.main.viewmodel
 
-import com.yszln.lib.viewmodel.RefreshViewModel
+import com.yszln.lib.viewmodel.BaseViewModel
 
-class HomeViewModel : RefreshViewModel() {}
+class HomeViewModel : BaseViewModel() {}

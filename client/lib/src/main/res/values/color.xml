@@ -26,4 +26,5 @@
     <color name="black">#000000</color><!--黑色 -->
     <color name="mask_black">#55000000</color><!--半透明黑色 -->
     <color name="transparent">#00000000</color><!--透明 -->
+    <color name="blue_1">#4189D0</color>
 </resources>

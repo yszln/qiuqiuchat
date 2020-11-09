@@ -1,7 +1,9 @@
 package com.yszln.qiuqiu.ui.main.view
 
+import android.os.Bundle
+import android.view.View
 import androidx.lifecycle.Observer
-import com.yszln.lib.fragment.BaseVMFragment
+import com.yszln.lib.fragment.BaseFragment
 import com.yszln.lib.utils.load
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.UserUtils
@@ -9,13 +11,19 @@ import com.yszln.qiuqiu.service.WebSocketService
 import com.yszln.qiuqiu.ui.main.viewmodel.MineViewModel
 import kotlinx.android.synthetic.main.fragment_mine.*
 
-class MineFragment : BaseVMFragment<MineViewModel>() {
-    override fun layoutId() = R.layout.fragment_mine
-
-    override fun refreshData() {
+class MineFragment : BaseFragment<MineViewModel>() {
+    override fun onClick(v: View?) {
     }
 
-    override fun initView() {
+    override fun layoutId() = R.layout.fragment_mine
+    override fun initView(savedInstanceState: Bundle?) {
+
+    }
+
+    override fun observer() {
+    }
+
+    override fun refreshData() {
         UserUtils.getLoginUser()?.apply {
             mineAvatarIv.load(avatar)
             mineNameTv.text = username
@@ -23,9 +31,7 @@ class MineFragment : BaseVMFragment<MineViewModel>() {
         WebSocketService.isConn.observe(this, Observer {
             mineStatusTv.text = if (it) "在线" else "离线"
         })
-
     }
 
-    override fun observe() {
-    }
+
 }
