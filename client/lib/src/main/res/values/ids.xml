@@ -2,6 +2,7 @@
 <resources>
     <!--刷新头-->
     <item name="mRefreshLayout" type="id" />
+    <item name="mEmptyView" type="id" />
 
     <!--状态栏工具类-->
     <item name="statusbarutil_fake_status_bar_view" type="id" />

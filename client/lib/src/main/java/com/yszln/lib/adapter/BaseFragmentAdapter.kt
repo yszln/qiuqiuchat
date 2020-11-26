@@ -6,10 +6,10 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.ViewPager
-import com.yszln.lib.fragment.BaseFragment
+import com.yszln.lib.fragment.SuperFragment
 
 
-class BaseFragmentAdapter<F : BaseFragment>(
+class BaseFragmentAdapter<F : SuperFragment>(
     fm: FragmentManager,
     behavior: Int = BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT
 ) :

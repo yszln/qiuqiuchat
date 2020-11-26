@@ -3,12 +3,12 @@ package com.yszln.qiuqiu.ui.login.viewmodel
 import androidx.lifecycle.MutableLiveData
 import com.yszln.lib.utils.getString
 import com.yszln.lib.utils.toast
-import com.yszln.lib.viewmodel.RefreshViewModel
+import com.yszln.lib.viewmodel.BaseViewModel
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.api.Api
 import com.yszln.qiuqiu.ui.login.model.LoginBean
 
-class LoginViewModel : RefreshViewModel() {
+class LoginViewModel : BaseViewModel() {
 
     val loginUser = MutableLiveData<LoginBean>()
 

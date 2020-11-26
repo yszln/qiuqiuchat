@@ -1,6 +1,6 @@
 package com.yszln.qiuqiu.ui.main.viewmodel
 
-import com.yszln.lib.viewmodel.RefreshViewModel
+import com.yszln.lib.viewmodel.BaseViewModel
 
-class MineViewModel : RefreshViewModel() {
+class MineViewModel : BaseViewModel() {
 }
