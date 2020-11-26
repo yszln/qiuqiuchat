@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="client/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client.iml" filepath="$PROJECT_DIR$/.idea/modules/client.iml" group="client" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib/lib.iml" filepath="$PROJECT_DIR$/.idea/modules/lib/lib.iml" group="client/lib" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client.iml" filepath="$PROJECT_DIR$/.idea/modules/client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/client.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/client.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib/client.lib.iml" filepath="$PROJECT_DIR$/.idea/modules/lib/client.lib.iml" />
     </modules>
   </component>
 </project>
