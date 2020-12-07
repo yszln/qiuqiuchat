@@ -2,18 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-<<<<<<< HEAD
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client.iml" filepath="$PROJECT_DIR$/.idea/modules/client.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/client.iml" filepath="$PROJECT_DIR$/.idea/client.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/client.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/client.app.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib/client.lib.iml" filepath="$PROJECT_DIR$/.idea/modules/lib/client.lib.iml" />
-=======
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="client/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/client.iml" filepath="$PROJECT_DIR$/.idea/modules/client.iml" group="client" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/client-app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/client-app.iml" group="client/app" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib/client-lib.iml" filepath="$PROJECT_DIR$/.idea/modules/lib/client-lib.iml" group="client/lib" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/lib/lib.iml" filepath="$PROJECT_DIR$/.idea/modules/lib/lib.iml" group="client/lib" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/qiuqiuchat-client.iml" filepath="$PROJECT_DIR$/.idea/modules/qiuqiuchat-client.iml" group="client" />
->>>>>>> 7ab43a64d929d0b4d63d01fe1fa9e32dcbb0e44c
     </modules>
   </component>
 </project>

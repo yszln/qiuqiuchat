@@ -33,10 +33,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".ui.login.view.LoginActivity"></activity>
+        <activity android:name=".ui.login.view.LoginActivity" />
 
-        <service android:name=".service.OkSocketService" />
         <service android:name=".service.WebSocketService" />
 
         <activity android:name=".ui.main.view.MainActivity" />

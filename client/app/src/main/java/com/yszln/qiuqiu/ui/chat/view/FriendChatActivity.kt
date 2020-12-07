@@ -75,6 +75,7 @@ class FriendChatActivity : BaseActivity<ChatViewModel>() {
 
 
     override fun initView(savedInstanceState: Bundle?) {
+        mTitleBar.setTitle(mUser?.username)
         chatVoice.onMediaListener = object : VoiceView.OnMediaListener {
             override fun onEnd(filePath: String) {
                 mViewModel.upload(mutableListOf(File(filePath)))
@@ -84,7 +85,7 @@ class FriendChatActivity : BaseActivity<ChatViewModel>() {
         mRecyclerView.adapter = mAdapter
         mRecyclerView.layoutManager = LinearLayoutManager(this)
         CacheDataBase.instance.messageDao()
-            .findFriendMessage(mUser?.id, UserUtils.getLoginUser()?.id).apply {
+            .findFriendMessage(mUser?.id, UserUtils.getLoginUser().id).apply {
                 mAdapter.setNewInstance(this)
                 scrollBottom();
             }
@@ -117,7 +118,7 @@ class FriendChatActivity : BaseActivity<ChatViewModel>() {
         intent?.extras?.getString(Constant.JSON)?.apply {
             mUser = jsonFormat(TbFriend::class.java)
         }
-        mTitleBar.setTitle(mUser?.username)
+
     }
 
 

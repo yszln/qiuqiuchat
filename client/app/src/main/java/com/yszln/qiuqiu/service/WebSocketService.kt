@@ -59,7 +59,7 @@ class WebSocketService : Service() {
      */
     private fun connectionSocket() {
         mSocket = WebSocketFactory()
-            .createSocket(Api.SOCKET_API + UserUtils.getToken(), 30)
+            .createSocket(Api.SOCKET_API + UserUtils.getToken(), 3000)
             .setFrameQueueSize(5)//设置帧队列最大值为5
             .setMissingCloseFrameAllowed(false)//设置不允许服务端关闭连接却未发送关闭帧
             .addListener(mWebSocketListener)//添加回调监听
@@ -150,7 +150,7 @@ class WebSocketService : Service() {
         @Throws(Exception::class)
         override fun onConnectError(websocket: WebSocket, exception: WebSocketException) {
             super.onConnectError(websocket, exception)
-            LogUtil.e("连接错误，开始重连")
+            LogUtil.e("连接错误，开始重连:${exception.message}")
             disConnection();
         }
 
@@ -173,23 +173,16 @@ class WebSocketService : Service() {
 
     private fun setChat(tbMessage: TbMessage) {
         tbMessage.apply {
-            val findByFriend = CacheDataBase.instance.chatDao().findByFriend(receiveId)
-            if (findByFriend.size < 1) {
-                val tbChat = TbChat(
-                    null,
-                    content,
-                    receiveId,
-                    receiveName,
-                    receiveAvatar,
-                    System.currentTimeMillis() / 1000
-                )
-                CacheDataBase.instance.chatDao().insert(tbChat)
-            } else {
-                findByFriend[0].content = content
-                findByFriend[0].time = System.currentTimeMillis() / 1000
-                CacheDataBase.instance.chatDao().deleteByFriend(receiveId)
-                CacheDataBase.instance.chatDao().update(findByFriend[0])
-            }
+            CacheDataBase.instance.chatDao().deleteByFriend(sourceId)
+            val tbChat = TbChat(
+                null,
+                content,
+                sourceId,
+                sourceName,
+                sourceAvatar,
+                System.currentTimeMillis() / 1000
+            )
+            CacheDataBase.instance.chatDao().insert(tbChat)
         }
 
     }

@@ -19,8 +19,9 @@ abstract class SuperActivity : AppCompatActivity() , IBaseView,View.OnClickListe
         for (view in registerClick()) {
             view.setOnClickListener(this)
         }
-        initView(savedInstanceState)
         initIntentData()
+        initView(savedInstanceState)
+
     }
 
 }

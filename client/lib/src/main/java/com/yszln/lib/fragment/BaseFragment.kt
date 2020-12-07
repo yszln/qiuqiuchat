@@ -42,7 +42,7 @@ abstract class BaseFragment<VM : BaseViewModel> : SuperFragment(),
     /**
      * 是否懒加载，重写修改
      */
-    fun isLazyLoad() = true
+    open fun isLazyLoad() = true
 
     override fun onResume() {
         super.onResume()

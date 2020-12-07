@@ -3,11 +3,8 @@ package com.yszln.qiuqiu.ui.main.view
 import android.os.Bundle
 import android.view.View
 import com.yszln.lib.fragment.BaseFragment
-import com.yszln.lib.utils.LogUtil
 import com.yszln.lib.utils.start
-import com.yszln.lib.utils.toJson
 import com.yszln.qiuqiu.R
-import com.yszln.qiuqiu.db.CacheDataBase
 import com.yszln.qiuqiu.ui.main.adapter.HomeChatAdapter
 import com.yszln.qiuqiu.ui.main.viewmodel.HomeViewModel
 import com.yszln.qiuqiu.ui.search.view.SearchActivity
@@ -18,11 +15,11 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     private val mAdapter = HomeChatAdapter()
 
     override fun refreshData() {
-        CacheDataBase.instance.chatDao().findAll().apply {
-            LogUtil.e(toJson())
-            mAdapter.addData(this)
-        }
+        mViewModel.getData()
     }
+
+    override fun isLazyLoad()=true
+
 
     override fun registerClick(): MutableList<View> {
         return mutableListOf(search_rl)
@@ -43,5 +40,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     override fun observer() {
+        mViewModel.chants.observe(this,{
+            mAdapter.setList(it)
+        })
     }
 }

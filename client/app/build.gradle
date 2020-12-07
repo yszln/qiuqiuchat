@@ -65,4 +65,8 @@ dependencies {
 
     implementation 'cn.dreamtobe.kpswitch:library:1.6.2'
 
+    implementation 'com.jeremyliao:live-event-bus-x:1.7.2'
+
+
+
 }

@@ -2,6 +2,7 @@ package com.yszln.qiuqiu.ui.main.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.KeyEvent
 import android.view.View
 import androidx.viewpager.widget.ViewPager
 import com.yszln.lib.activity.SuperActivity
@@ -73,6 +74,17 @@ class MainActivity : SuperActivity() {
         }
     }
 
+
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            val intent = Intent(Intent.ACTION_MAIN)
+            intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
+            intent.addCategory(Intent.CATEGORY_HOME)
+            startActivity(intent)
+            return true
+        }
+        return super.onKeyDown(keyCode, event)
+    }
 
 
 }

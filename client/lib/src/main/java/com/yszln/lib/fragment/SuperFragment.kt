@@ -26,8 +26,8 @@ abstract class SuperFragment : Fragment() ,View.OnClickListener,IBaseView{
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        initView(savedInstanceState)
         initIntentData()
+        initView(savedInstanceState)
         for (view in registerClick()) {
             view.setOnClickListener(this)
         }

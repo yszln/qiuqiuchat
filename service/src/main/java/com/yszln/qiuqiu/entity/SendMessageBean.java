@@ -1,8 +1,6 @@
 package com.yszln.qiuqiu.entity;
 
-import lombok.Data;
 
-@Data
 public class SendMessageBean {
     private long receiverId;
     private String content;
@@ -18,5 +16,35 @@ public class SendMessageBean {
         return message;
     }
 
+    public long getReceiverId() {
+        return receiverId;
+    }
 
+    public void setReceiverId(long receiverId) {
+        this.receiverId = receiverId;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public int getType() {
+        return type;
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
 }

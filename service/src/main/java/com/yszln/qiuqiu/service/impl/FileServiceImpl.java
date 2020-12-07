@@ -16,9 +16,9 @@ import java.util.List;
 public class FileServiceImpl implements FileService {
 
     //nginx的路径
-    public static final String PATH = "E:\\soft\\nginx-1.15.11\\html\\";
+    public static final String PATH = "C://nginx//";
     public static final String UPLOAD_PATH = "upload";
-    public static final String STATIC_HOST = "http://yszln.iask.in/";
+    public static final String STATIC_HOST = "http://121.4.67.101/";
 
 
     @Override
