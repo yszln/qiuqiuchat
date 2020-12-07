@@ -25,6 +25,7 @@ proguard/
 
 # 日志文件
 *.log
+.idea
 
 # Android Studio导航编辑器临时文件
 .navigation/
