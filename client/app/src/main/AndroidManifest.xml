@@ -16,7 +16,6 @@
         android:roundIcon="@drawable/ic_logo"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.search.view.SearchActivity"></activity>
 
         <receiver android:name=".receiver.MessageReceiver">
             <intent-filter>
@@ -24,20 +23,16 @@
             </intent-filter>
         </receiver>
 
-        <activity
-            android:name=".ui.splash.SplashActivity"
-            android:theme="@style/Splash">
+
+        <service android:name=".service.WebSocketService" />
+
+        <activity android:name=".ui.main.view.MainActivity" android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.login.view.LoginActivity" />
-
-        <service android:name=".service.WebSocketService" />
-
-        <activity android:name=".ui.main.view.MainActivity" android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
     </application>
 
 </manifest>

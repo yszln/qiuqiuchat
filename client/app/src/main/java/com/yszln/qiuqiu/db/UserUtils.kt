@@ -1,12 +1,15 @@
 package com.yszln.qiuqiu.db
 
 import android.content.Intent
+import androidx.navigation.Navigation
 import com.yszln.lib.app.AppManageHelper
 import com.yszln.lib.utils.start
+import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.table.TbUser
 import com.yszln.qiuqiu.service.WebSocketService
 import com.yszln.qiuqiu.ui.login.model.LoginBean
-import com.yszln.qiuqiu.ui.login.view.LoginActivity
+import com.yszln.qiuqiu.ui.login.view.LoginFragment
+import com.yszln.qiuqiu.ui.main.view.MainActivity
 
 object UserUtils {
 
@@ -25,9 +28,16 @@ object UserUtils {
             true
         } else {
             //去登录
-            start(LoginActivity::class.java)
+            toLogin()
             false
         }
+    }
+
+    private fun toLogin() {
+        while (MainActivity.mNavController.popBackStack()){
+
+        }
+        MainActivity.mNavController.navigate(R.id.loginFragment)
     }
 
     fun login(loginer: LoginBean) {
@@ -40,11 +50,14 @@ object UserUtils {
     fun loginOut() {
 
         CacheDataBase.instance.userDao().deleteAll()
-        start(LoginActivity::class.java)
+
         //停止消息推送服务
         AppManageHelper.currentActivity().apply {
             stopService(Intent(this, WebSocketService::class.java))
         }
+
+        //去登录
+        toLogin()
 
     }
 

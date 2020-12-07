@@ -1,5 +1,6 @@
 package com.yszln.qiuqiu.ui.main.view
 
+import android.Manifest
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
@@ -8,27 +9,28 @@ import android.os.Bundle
 import android.os.IBinder
 import android.view.KeyEvent
 import android.view.View
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import com.yszln.lib.activity.RootActivity
-import com.yszln.lib.activity.SuperActivity
-import com.yszln.lib.fragment.BaseFragment
 import com.yszln.lib.utils.MyStatusBar
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.CacheDataBase
 import com.yszln.qiuqiu.db.UserUtils
 import com.yszln.qiuqiu.db.table.TbChat
-import com.yszln.qiuqiu.db.table.TbFriend
 import com.yszln.qiuqiu.db.table.TbMessage
 import com.yszln.qiuqiu.db.table.TbUser
 import com.yszln.qiuqiu.service.WebSocketService
 import com.yszln.qiuqiu.ui.chat.model.ChatEnum
-import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : RootActivity() {
 
+    companion object{
+        lateinit var mNavController: NavController
+    }
 
     override fun layoutId() = R.layout.activity_main
+
 
     private var mUser: TbUser = UserUtils.getLoginUser()
 
@@ -36,13 +38,42 @@ class MainActivity : RootActivity() {
     private val mChatConn = ChatConnection()
 
     override fun initView(savedInstanceState: Bundle?) {
+        window.setBackgroundDrawableResource(R.color.white)
         MyStatusBar(this)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ), 0
+            )
+        }
 
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+
+        //启动长连接服务
         val intent = Intent(this, WebSocketService::class.java)
         startService(intent)
         bindService(Intent(this, WebSocketService::class.java), mChatConn, Context.BIND_AUTO_CREATE)
-    }
 
+        mNavController = findNavController(R.id.mainNavHost)
+
+        mNavController.setGraph(R.navigation.nav_graph)
+        if (UserUtils.checkLogin()) {
+            mNavController.navigate(R.id.mainFragment)
+        }else{
+            mNavController.navigate(R.id.loginFragment)
+        }
+    }
     override fun onClick(v: View?) {
     }
 

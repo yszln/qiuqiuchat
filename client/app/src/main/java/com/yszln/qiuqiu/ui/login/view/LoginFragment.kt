@@ -4,7 +4,8 @@ import android.os.Bundle
 import android.text.TextUtils
 import android.view.View
 import androidx.lifecycle.Observer
-import com.yszln.lib.activity.BaseActivity
+import androidx.navigation.fragment.findNavController
+import com.yszln.lib.fragment.BaseFragment
 import com.yszln.lib.utils.start
 import com.yszln.lib.utils.textStr
 import com.yszln.lib.utils.toast
@@ -19,7 +20,7 @@ import kotlinx.android.synthetic.main.activity_login.*
 /**
  * 登陆
  */
-class LoginActivity : BaseActivity<LoginViewModel>() {
+class LoginFragment : BaseFragment<LoginViewModel>() {
 
     var loginType = 0;
 
@@ -28,40 +29,40 @@ class LoginActivity : BaseActivity<LoginViewModel>() {
 
 
     override fun initView(savedInstanceState: Bundle?) {
-        loginType = intent?.extras?.getInt(Constant.LOGIN_TYPE) ?: 0;
+        loginType = arguments?.getInt(Constant.LOGIN_TYPE) ?: 0;
         setLayoutWithType()
     }
 
-
+    override fun onBackPressed()=false
     override fun onClick(v: View?) {
         when (v?.id) {
             loginClose.id -> {
-                finish()
+                mActivity.finish()
             }
             loginBtn.id -> {
                 submitData()
             }
             loginForgetPassword.id -> {
-                start<LoginActivity>(
-                    Constant.LOGIN_TYPE to 2
-                )
+                onBackPressed()
+                findNavController().navigate(
+                    R.id.action_loginFragment_to_register,
+                    Bundle().apply { putInt(Constant.LOGIN_TYPE, 2) })
             }
             loginRegister.id -> {
-                finish()
-                start<LoginActivity>(
-                    Constant.LOGIN_TYPE to 1
-                )
+                onBackPressed()
+                findNavController().navigate(
+                    R.id.action_loginFragment_to_register,
+                    Bundle().apply { putInt(Constant.LOGIN_TYPE, 1) })
             }
         }
     }
 
     override fun observer() {
         mViewModel.apply {
-            loginUser.observe(this@LoginActivity, Observer {
+            loginUser.observe(this@LoginFragment, Observer {
                 //缓存
                 UserUtils.login(it)
-                start(MainActivity::class.java)
-                finish()
+                findNavController().navigate(R.id.action_loginFragment_to_mainFragment)
             })
         }
     }

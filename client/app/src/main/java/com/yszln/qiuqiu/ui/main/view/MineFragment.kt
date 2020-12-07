@@ -13,11 +13,20 @@ import kotlinx.android.synthetic.main.fragment_mine.*
 
 class MineFragment : BaseFragment<MineViewModel>() {
     override fun onClick(v: View?) {
+        when(v?.id){
+            mineLoginOutTv.id->{
+                UserUtils.loginOut()
+            }
+        }
     }
 
     override fun layoutId() = R.layout.fragment_mine
     override fun initView(savedInstanceState: Bundle?) {
 
+    }
+
+    override fun registerClick(): MutableList<View> {
+        return mutableListOf(mineLoginOutTv)
     }
 
     override fun observer() {
