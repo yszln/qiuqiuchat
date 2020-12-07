@@ -1,14 +1,29 @@
 package com.yszln.lib.utils
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.widget.ImageView
 import com.bumptech.glide.Glide
-import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.yszln.lib.R
 
+
 object ImageLoader {
+
+    const val mCircleCorners = 360
+
+    /**
+     * 错误图片
+     */
+    private val mErrorImg = R.drawable.ic_default
+
+    /**
+     * 加载中的图片-占位图
+     */
+    private val mLoadingImg = R.drawable.ic_default
+
     /**
      * 加载图片
      * @param context
@@ -22,73 +37,77 @@ object ImageLoader {
         context: Context,
         imageView: ImageView,
         url: Any,
+        roundedCorners: Int = 0,
         errorImg: Int?,
         loadingImg: Int?,
-        roundedCorners: Int?
+        listener: RequestListener<Drawable>? = null
     ) {
         Glide.with(context)
             .load(url)
-//            .optionalCenterCrop()
-            .centerCrop()
+            .addListener(listener)
             .apply {
-                roundedCorners?.let {
-                    if (roundedCorners > 60) {
+
+                if (roundedCorners >= mCircleCorners) {
+                    //圆角
+                    apply(RequestOptions.circleCropTransform())
+                } else if (roundedCorners > 0) {
+                    //圆形
+                    apply(
                         RequestOptions.bitmapTransform(
-                            CircleCrop()
-                        )
-                    } else {
-                        apply(
-                            RequestOptions.bitmapTransform(
-                                RoundedCorners(
-                                    ScreenUtil.dpToPx(
-                                        roundedCorners
-                                    )
-                                )
+                            RoundedCorners(
+                                roundedCorners.px()
                             )
                         )
-                    }
+                    )
                 }
+                //错误图片
+                error(errorImg ?: mErrorImg)
+                //加载中图片
+                placeholder(loadingImg ?: mLoadingImg)
 
-                error(errorImg ?: R.drawable.ic_default)
-                placeholder(loadingImg ?: R.drawable.ic_default)
 
-
-            }.into(imageView);
-
+            }.into(imageView)
 
     }
 
-    fun load(
-        context: Context,
-        imageView: ImageView,
-        url: Any,
-        errorImg: Int?,
-        loadingImg: Int?
-    ) {
-        load(imageView.context, imageView, url, errorImg, loadingImg, null)
-    }
-
-    fun load(
-        imageView: ImageView,
-        url: Any
-    ) {
-        load(imageView.context, imageView, url, null, null, null)
-    }
-
-    fun load(
-        context: Context,
-        imageView: ImageView,
-        url: Any
-    ) {
-        load(context, imageView, url, null, null, null)
-    }
-
-
+    /**
+     * 加载图片
+     */
     fun load(
         imageView: ImageView,
         url: Any,
-        roundedCorners: Int?
+        roundedCorners: Int = 0,
+        errorImg: Int? = mErrorImg,
+        loadingImg: Int? = mLoadingImg,
+        listener: RequestListener<Drawable>? = null
     ) {
-        load(imageView.context, imageView, url, null, null, roundedCorners)
+        load(imageView.context, imageView, url, roundedCorners, errorImg, loadingImg,listener)
     }
+
+    /**
+     * 加载圆形图片
+     */
+    fun loadCircle(
+        context: Context,
+        imageView: ImageView,
+        url: Any,
+        errorImg: Int = mErrorImg,
+        loadingImg: Int = mLoadingImg
+    ) {
+        load(context, imageView, url, mCircleCorners, errorImg, loadingImg)
+    }
+
+    /**
+     * 加载圆形图片
+     */
+    fun loadCircle(
+        imageView: ImageView,
+        url: Any,
+        errorImg: Int? = mErrorImg,
+        loadingImg: Int? = mLoadingImg
+    ) {
+        load(imageView.context, imageView, url, mCircleCorners, errorImg, loadingImg)
+    }
+
+
 }

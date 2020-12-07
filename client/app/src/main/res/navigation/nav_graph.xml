@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    app:startDestination="@id/mainFragment">
+
+    <fragment
+        android:id="@+id/mainFragment"
+        android:name="com.yszln.qiuqiu.ui.main.view.MainFragment"
+        android:label="主页"
+        tools:layout="@layout/fragment_main" >
+        <action
+            android:id="@+id/action_mainFragment_to_FriendChatFragment"
+            app:enterAnim="@anim/slide_right_in"
+            app:popExitAnim="@anim/slide_right_out"
+            app:exitAnim="@anim/slide_left_out"
+            app:popEnterAnim="@anim/slide_left_in"
+
+            app:destination="@id/FriendChatFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/FriendChatFragment"
+        android:name="com.yszln.qiuqiu.ui.chat.view.FriendChatFragment"
+        android:label="好友聊天页" />
+</navigation>

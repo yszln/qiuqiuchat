@@ -4,6 +4,7 @@ import android.util.Log
 
 object LogUtil {
 
+    @JvmStatic
     fun e(str: String) {
         Log.e("ERROR",str)
     }

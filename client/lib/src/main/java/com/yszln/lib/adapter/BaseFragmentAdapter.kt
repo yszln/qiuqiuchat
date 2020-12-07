@@ -96,11 +96,11 @@ class BaseFragmentAdapter<F : SuperFragment>(
 
     override fun startUpdate(container: ViewGroup) {
         super.startUpdate(container)
-        if (container is ViewPager) {
+       /* if (container is ViewPager) {
             // 记录绑定 ViewPager
             mViewPager = container
             refreshLazyMode()
-        }
+        }*/
     }
 
     /**
@@ -122,7 +122,7 @@ class BaseFragmentAdapter<F : SuperFragment>(
             // 设置成懒加载模式（也就是不限制 Fragment 展示的数量）
             mViewPager?.offscreenPageLimit = count
         } else {
-            mViewPager?.setOffscreenPageLimit(1)
+            mViewPager?.offscreenPageLimit = 1
         }
     }
 }

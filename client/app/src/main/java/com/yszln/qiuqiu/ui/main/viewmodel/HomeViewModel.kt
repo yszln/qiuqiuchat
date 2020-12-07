@@ -14,11 +14,9 @@ class HomeViewModel : BaseViewModel() {
     fun  getData(){
         launch(
             {
-                CacheDataBase.instance.chatDao().findAll().apply {
-                    chants.value=this
-                    LogUtil.e(toJson())
-                    refreshEnd()
-                }
+                chants.value=  CacheDataBase.instance.chatDao().findAll()
+                LogUtil.e(chants.value?.toJson()?:"")
+                refreshEnd()
             }
         )
     }

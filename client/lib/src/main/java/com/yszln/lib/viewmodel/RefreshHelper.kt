@@ -1,6 +1,7 @@
 package com.yszln.lib.viewmodel
 
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.yszln.lib.ibase.IBaseVM
 import com.yszln.lib.loading.EmptyView
@@ -21,11 +22,11 @@ class RefreshHelper(
         //没有刷新控件执行刷新方法
         refreshLayout?:iBaseViewModel.onRefresh()
 
-        mViewModel.mLoadingStatus.observe(owner, {
+        mViewModel.mLoadingStatus.observe(owner, Observer{
             if (it) iBaseViewModel.showLoading() else iBaseViewModel.dismissLoading()
 
         })
-        mViewModel.mRefreshStatus.observe(owner, {
+        mViewModel.mRefreshStatus.observe(owner, Observer{
             when (it) {
                 RefreshStatus.REFRESH -> {
                     //开始刷新

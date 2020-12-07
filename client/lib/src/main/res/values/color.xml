@@ -27,4 +27,11 @@
     <color name="mask_black">#55000000</color><!--半透明黑色 -->
     <color name="transparent">#00000000</color><!--透明 -->
     <color name="blue_1">#4189D0</color>
+
+    <color name="green_wx">#07C160</color>
+    <color name="green_wx2">#06AE56</color>
+    <color name="blue_wx">#576B95</color>
+    <color name="blue_wx2">#C0CAD5</color>
+    <color name="red_wx">#FF3B30</color>
+    <color name="line" >@color/gray_ed</color>
 </resources>

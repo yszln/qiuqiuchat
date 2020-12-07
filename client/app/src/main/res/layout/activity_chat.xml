@@ -47,10 +47,5 @@
                 android:text="发送" />
         </LinearLayout>
 
-        <cn.dreamtobe.kpswitch.widget.KPSwitchFSPanelFrameLayout
-            android:id="@+id/panelFrameLayout"
-            android:layout_width="match_parent"
-            android:visibility="gone"
-            android:layout_height="wrap_content" />
     </LinearLayout>
 </LinearLayout>

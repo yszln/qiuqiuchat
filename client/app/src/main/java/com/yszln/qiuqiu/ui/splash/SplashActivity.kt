@@ -16,18 +16,15 @@ class SplashActivity : SuperActivity() {
     override fun layoutId() = R.layout.activity_splash
     override fun initView(savedInstanceState: Bundle?) {
         window.setBackgroundDrawableResource(R.color.white)
-        Handler(Looper.getMainLooper()).postDelayed({
-
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
-                requestPermissions(
-                    arrayOf(
-                        Manifest.permission.RECORD_AUDIO,
-                        Manifest.permission.READ_EXTERNAL_STORAGE,
-                        Manifest.permission.WRITE_EXTERNAL_STORAGE
-                    ), 0
-                )
-            }
-        },2000)
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.M) {
+            requestPermissions(
+                arrayOf(
+                    Manifest.permission.RECORD_AUDIO,
+                    Manifest.permission.READ_EXTERNAL_STORAGE,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ), 0
+            )
+        }
 
     }
 

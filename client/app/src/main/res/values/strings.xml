@@ -22,4 +22,6 @@
     <string name="header_scrolling_behavior">com.yszln.qiuqiu.ui.main.view.behavior.HeaderScrollingBehavior</string>
     <string name="header_logo_behavior">com.yszln.qiuqiu.ui.main.view.behavior.HeaderLogoBehavior</string>
     <string name="linkman">联系人</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

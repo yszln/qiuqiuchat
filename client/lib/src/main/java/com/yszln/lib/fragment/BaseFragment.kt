@@ -6,6 +6,7 @@ import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.yszln.lib.R
+import com.yszln.lib.activity.RootActivity
 import com.yszln.lib.ibase.IBaseVM
 import com.yszln.lib.ibase.IBaseView
 import com.yszln.lib.ibase.ILoadMore
@@ -32,11 +33,11 @@ abstract class BaseFragment<VM : BaseViewModel> : SuperFragment(),
     // 是否第一次加载
     private var isFirstLoad = true
 
-    protected var mContext: FragmentActivity? = null
+    protected lateinit var mActivity: RootActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mContext = activity
+        mActivity = activity as RootActivity
     }
 
     /**
@@ -66,6 +67,7 @@ abstract class BaseFragment<VM : BaseViewModel> : SuperFragment(),
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mActivity.currentFragment = this
         initViewModel()
         initRefresh()
         observer()
@@ -130,6 +132,11 @@ abstract class BaseFragment<VM : BaseViewModel> : SuperFragment(),
         mViewModel = ViewModelProvider(this).get(vmClazz)
 
     }
+
+    /**
+     * 拦截返回事件
+     */
+    open fun onBackPressed() = true
 
 
 }

@@ -37,10 +37,7 @@
 
         <service android:name=".service.WebSocketService" />
 
-        <activity android:name=".ui.main.view.MainActivity" />
-        <activity
-            android:name=".ui.chat.view.FriendChatActivity"
-            android:windowSoftInputMode="adjustResize" />
+        <activity android:name=".ui.main.view.MainActivity" android:windowSoftInputMode="adjustPan|stateAlwaysHidden" />
     </application>
 
 </manifest>

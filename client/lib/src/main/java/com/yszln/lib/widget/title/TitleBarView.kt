@@ -6,6 +6,7 @@ import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.navigation.findNavController
 import com.yszln.lib.R
 import com.yszln.lib.utils.StatusBarUtil
 import kotlinx.android.synthetic.main.view_title.view.*
@@ -24,13 +25,12 @@ class TitleBarView @JvmOverloads constructor(
 
     init {
         View.inflate(context, R.layout.view_title, this)
+        setBackgroundResource(R.color.green_wx)
         mBlackIv = titleBlack
         mTitleTv = titleTitle
         mMoreIv = titleMore
         titleBlack.setOnClickListener {
-            if (context is Activity) {
-                context.finish()
-            }
+            findNavController().popBackStack()
         }
 
         if (context is AppCompatActivity) {

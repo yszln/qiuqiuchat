@@ -14,6 +14,7 @@ import com.yszln.lib.network.ApiExceptionHandler
 import com.yszln.lib.utils.LogUtil
 import com.yszln.lib.utils.jsonFormat
 import com.yszln.lib.utils.toJson
+import com.yszln.qiuqiu.MyApp
 import com.yszln.qiuqiu.api.Api
 import com.yszln.qiuqiu.db.CacheDataBase
 import com.yszln.qiuqiu.db.UserUtils
@@ -21,7 +22,9 @@ import com.yszln.qiuqiu.db.table.TbChat
 import com.yszln.qiuqiu.db.table.TbMessage
 import com.yszln.qiuqiu.ui.chat.model.ChatEnum
 import com.yszln.qiuqiu.ui.chat.model.SendMessageBean
+import com.yszln.qiuqiu.ui.main.view.MainActivity
 import com.yszln.qiuqiu.utils.Constant
+import com.yszln.qiuqiu.utils.NotificationUtils
 import okio.ByteString
 
 class WebSocketService : Service() {
@@ -165,7 +168,10 @@ class WebSocketService : Service() {
             itemType = ChatEnum.OTHER.value
             CacheDataBase.instance.messageDao().insert(this)
             setChat(this)
+            //通知聊天页面
             LiveDataBus.post(Constant.SEND_MESSAGE, this)
+            //显示通知
+//            NotificationUtils.show(MyApp.instance,sourceName,content,MainActivity::class.java,"")
         }
 
 

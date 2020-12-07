@@ -1,6 +1,7 @@
 package com.yszln.lib.viewmodel
 
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.yszln.lib.ibase.IBaseVM
 import com.yszln.lib.ibase.ILoadMore
 import com.yszln.lib.loading.EmptyView
@@ -15,7 +16,7 @@ class LoadHelper(
 
     init {
         iLoadMore.getLoadModule()?.setOnLoadMoreListener(iLoadMore)
-        mViewModel.mRefreshStatus.observe(owner, {
+        mViewModel.mRefreshStatus.observe(owner, Observer{
             when (it) {
                 RefreshStatus.LOAD_END -> {
                     //加载完毕

@@ -2,6 +2,7 @@ package com.yszln.qiuqiu.ui.main.view
 
 import android.os.Bundle
 import android.view.View
+import androidx.lifecycle.Observer
 import com.yszln.lib.fragment.BaseFragment
 import com.yszln.lib.utils.start
 import com.yszln.qiuqiu.R
@@ -18,7 +19,7 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
         mViewModel.getData()
     }
 
-    override fun isLazyLoad()=true
+    override fun onBackPressed() = false
 
 
     override fun registerClick(): MutableList<View> {
@@ -27,8 +28,8 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
 
 
     override fun onClick(v: View?) {
-        when(v?.id){
-            search_rl.id->{
+        when (v?.id) {
+            search_rl.id -> {
                 start(SearchActivity::class.java)
             }
         }
@@ -40,8 +41,6 @@ class HomeFragment : BaseFragment<HomeViewModel>() {
     }
 
     override fun observer() {
-        mViewModel.chants.observe(this,{
-            mAdapter.setList(it)
-        })
+        mViewModel.chants.observe(this, Observer { mAdapter.setList(it) })
     }
 }
