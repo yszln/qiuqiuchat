@@ -1,6 +1,5 @@
 package com.yszln.qiuqiu.entity;
 
-import lombok.Data;
 
 public class Message {
     private long id;

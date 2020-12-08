@@ -19,7 +19,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="个人中心"
-           
+
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -39,8 +39,8 @@
             android:id="@+id/mineAvatarIv"
             android:layout_width="@dimen/_50dp"
             android:layout_height="@dimen/_50dp"
-            android:layout_marginTop="@dimen/_30dp"
             android:layout_marginLeft="@dimen/_15dp"
+            android:layout_marginTop="@dimen/_30dp"
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
 
@@ -48,11 +48,11 @@
             android:id="@+id/mineNameTv"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_12dp"
+
             android:layout_toRightOf="@id/mineAvatarIv"
-           
             android:textSize="@dimen/_18sp"
             android:textStyle="bold"
-            android:layout_marginLeft="@dimen/_12dp"
             app:layout_constraintStart_toEndOf="@+id/mineAvatarIv"
             app:layout_constraintTop_toTopOf="@+id/mineAvatarIv"
             tools:text="登陆用户" />
@@ -62,15 +62,16 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/mineNameTv"
+            android:layout_marginTop="@dimen/_8dp"
             android:layout_toRightOf="@id/mineAvatarIv"
             android:textColor="@color/gray_bf"
             android:textSize="@dimen/_12sp"
-            android:layout_marginTop="@dimen/_8dp"
             app:layout_constraintStart_toStartOf="@+id/mineNameTv"
             app:layout_constraintTop_toBottomOf="@+id/mineNameTv"
             tools:text="登陆状态" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

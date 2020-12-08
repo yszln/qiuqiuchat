@@ -1,7 +1,9 @@
 package com.yszln.lib.fragment
 
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
@@ -11,6 +13,7 @@ import com.yszln.lib.ibase.IBaseVM
 import com.yszln.lib.ibase.IBaseView
 import com.yszln.lib.ibase.ILoadMore
 import com.yszln.lib.loading.EmptyView
+import com.yszln.lib.utils.LogUtil
 import com.yszln.lib.viewmodel.BaseViewModel
 import com.yszln.lib.viewmodel.LoadHelper
 import com.yszln.lib.viewmodel.RefreshHelper
@@ -35,6 +38,8 @@ abstract class BaseFragment<VM : BaseViewModel> : SuperFragment(),
 
     protected lateinit var mActivity: RootActivity
 
+    private var lastCreateView:View?=null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mActivity = activity as RootActivity
@@ -47,6 +52,7 @@ abstract class BaseFragment<VM : BaseViewModel> : SuperFragment(),
 
     override fun onResume() {
         super.onResume()
+        LogUtil.e("生命周期：${this.javaClass.name}_onResume:$isFirstLoad")
         if (isFirstLoad && isLazyLoad()) {
             //懒加载
             isFirstLoad = false
@@ -59,15 +65,26 @@ abstract class BaseFragment<VM : BaseViewModel> : SuperFragment(),
      * 关闭懒加载调用这里，每次显示都去请求网络
      */
     override fun onHiddenChanged(hidden: Boolean) {
+        LogUtil.e("生命周期：${this.javaClass.name}_onHiddenChanged:$hidden")
         super.onHiddenChanged(hidden)
         if (!isLazyLoad() && hidden) {
             refreshData()
         }
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return super.onCreateView(inflater, container, savedInstanceState)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        LogUtil.e("生命周期：${this.javaClass.name}_onViewCreated")
         mActivity.currentFragment = this
+        mActivity.hideKeyboard()
         initViewModel()
         initRefresh()
         observer()
@@ -89,6 +106,7 @@ abstract class BaseFragment<VM : BaseViewModel> : SuperFragment(),
 
     override fun onDestroyView() {
         super.onDestroyView()
+        LogUtil.e("生命周期：${this.javaClass.name}_onDestroyView")
         //view被销毁
         isFirstLoad = false
     }

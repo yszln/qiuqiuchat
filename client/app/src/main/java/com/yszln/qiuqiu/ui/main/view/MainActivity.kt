@@ -21,6 +21,7 @@ import com.yszln.qiuqiu.db.table.TbMessage
 import com.yszln.qiuqiu.db.table.TbUser
 import com.yszln.qiuqiu.service.WebSocketService
 import com.yszln.qiuqiu.ui.chat.model.ChatEnum
+import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : RootActivity() {

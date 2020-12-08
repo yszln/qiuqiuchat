@@ -18,6 +18,12 @@
             app:popEnterAnim="@anim/slide_left_in"
 
             app:destination="@id/FriendChatFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_searchFragment"
+            app:destination="@id/searchFragment" />
+        <action
+            android:id="@+id/action_mainFragment_to_settingFragment"
+            app:destination="@id/settingFragment" />
     </fragment>
     <fragment
         android:id="@+id/FriendChatFragment"
@@ -35,4 +41,14 @@
             android:id="@+id/action_loginFragment_to_register"
             app:destination="@id/loginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/searchFragment"
+        android:name="com.yszln.qiuqiu.ui.search.view.SearchFragment"
+        android:label="activity_search"
+        tools:layout="@layout/activity_search" />
+    <fragment
+        android:id="@+id/settingFragment"
+        android:name="com.yszln.qiuqiu.ui.main.view.SettingFragment"
+        android:label="fragment_setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

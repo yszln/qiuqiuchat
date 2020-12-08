@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.search.view.SearchActivity">
+    tools:context=".ui.search.view.SearchFragment">
 
     <com.yszln.lib.widget.title.SearchBarView
         android:id="@+id/searchBarView"

@@ -1,10 +1,10 @@
 package com.yszln.lib.widget.title
 
-import android.app.Activity
 import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.yszln.lib.R
@@ -16,7 +16,7 @@ class TitleBarView @JvmOverloads constructor(
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
     var mBlackIv: View
-    var mTitleTv: View
+    var mTitleTv: TextView
     var mMoreIv: View
 
     fun setTitle(title: CharSequence?) {

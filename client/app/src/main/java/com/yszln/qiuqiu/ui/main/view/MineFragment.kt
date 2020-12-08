@@ -3,6 +3,7 @@ package com.yszln.qiuqiu.ui.main.view
 import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.yszln.lib.fragment.BaseFragment
 import com.yszln.lib.utils.load
 import com.yszln.qiuqiu.R
@@ -17,6 +18,9 @@ class MineFragment : BaseFragment<MineViewModel>() {
             mineLoginOutTv.id->{
                 UserUtils.loginOut()
             }
+            mineSettingIv.id->{
+                findNavController().navigate(R.id.settingFragment)
+            }
         }
     }
 
@@ -26,7 +30,7 @@ class MineFragment : BaseFragment<MineViewModel>() {
     }
 
     override fun registerClick(): MutableList<View> {
-        return mutableListOf(mineLoginOutTv)
+        return mutableListOf(mineLoginOutTv,mineSettingIv)
     }
 
     override fun observer() {

@@ -6,12 +6,10 @@ import android.view.View
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.yszln.lib.fragment.BaseFragment
-import com.yszln.lib.utils.start
 import com.yszln.lib.utils.textStr
 import com.yszln.lib.utils.toast
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.UserUtils
-import com.yszln.qiuqiu.ui.main.view.MainActivity
 import com.yszln.qiuqiu.ui.login.viewmodel.LoginViewModel
 import com.yszln.qiuqiu.utils.Constant
 import com.yszln.qiuqiu.utils.TextWatchUtils

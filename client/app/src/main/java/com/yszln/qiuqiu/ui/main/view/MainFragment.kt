@@ -14,6 +14,8 @@ class MainFragment : BaseFragment<BaseViewModel>() {
 
     val navs = ArrayList<NavBean>();
 
+    var lastIndex=0
+
     override fun onClick(v: View?) {
 
     }
@@ -41,10 +43,11 @@ class MainFragment : BaseFragment<BaseViewModel>() {
             add(NavBean(R.id.main_linkman, LinkmanFragment()))
             add(NavBean(R.id.main_mine, MineFragment()))
         }
-        switchFragment(0)
+        switchFragment(lastIndex)
         mainNav.setOnNavigationItemSelectedListener {
             for (i in 0 until navs.size) {
                 if (it.itemId == navs[i].id) {
+                    lastIndex=i;
                     switchFragment(i);
                     true
                 }

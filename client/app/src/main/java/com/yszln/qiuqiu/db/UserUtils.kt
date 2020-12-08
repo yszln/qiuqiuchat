@@ -1,14 +1,11 @@
 package com.yszln.qiuqiu.db
 
 import android.content.Intent
-import androidx.navigation.Navigation
 import com.yszln.lib.app.AppManageHelper
-import com.yszln.lib.utils.start
 import com.yszln.qiuqiu.R
 import com.yszln.qiuqiu.db.table.TbUser
 import com.yszln.qiuqiu.service.WebSocketService
 import com.yszln.qiuqiu.ui.login.model.LoginBean
-import com.yszln.qiuqiu.ui.login.view.LoginFragment
 import com.yszln.qiuqiu.ui.main.view.MainActivity
 
 object UserUtils {
