@@ -17,16 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <receiver android:name=".receiver.MessageReceiver">
-            <intent-filter>
-                <action android:name="net.deniro.android.MY_BROADCAST" />
-            </intent-filter>
-        </receiver>
-
 
         <service android:name=".service.WebSocketService" />
 
-        <activity android:name=".ui.main.view.MainActivity" android:windowSoftInputMode="adjustPan|stateAlwaysHidden" >
+        <activity
+            android:name=".ui.main.view.MainActivity"
+            android:windowSoftInputMode="adjustPan|stateAlwaysHidden">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -136,11 +136,12 @@ class MainActivity : RootActivity() {
 
 
     override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
-        if (currentFragment.onBackPressed()) {
-            findNavController(R.id.mainNavHost).popBackStack()
-            return true
-        }
+
         if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if (currentFragment.onBackPressed()) {
+                findNavController(R.id.mainNavHost).popBackStack()
+                return true
+            }
             val intent = Intent(Intent.ACTION_MAIN)
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
             intent.addCategory(Intent.CATEGORY_HOME)
